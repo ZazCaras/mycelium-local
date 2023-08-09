@@ -43,27 +43,6 @@ java {
     targetCompatibility = JavaVersion.toVersion("17")
 }
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
-}
-
-tasks.register("sonarqubeexec") {
-    doLast {
-        val sonarProjectKey = "prueba"
-        val sonarHostUrl = "http://localhost:9000"
-        val sonarLogin = "sqp_ab6ee875deb1911a41a168b49c41630e95128b27"
-
-        exec {
-            commandLine = listOf(
-                "./gradlew", "sonar",
-                "-Dsonar.projectKey=$sonarProjectKey",
-                "-Dsonar.host.url=$sonarHostUrl",
-                "-Dsonar.login=$sonarLogin"
-            )
-        }
-    }
-}
-
 graalvmNative.toolchainDetection.set(false)
 
 micronaut {
