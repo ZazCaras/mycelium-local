@@ -3,6 +3,8 @@ plugins {
     id("io.micronaut.application") version "3.7.0"
     id("com.google.cloud.tools.jib") version "2.8.0"
     id("io.micronaut.test-resources") version "3.7.0"
+    kotlin("jvm") version "1.5.21"
+    id("org.sonarqube") version "4.2.1.3168"
 }
 
 version = "0.1"
@@ -31,6 +33,7 @@ dependencies {
     implementation("io.micronaut.sql:micronaut-jdbc-ucp:4.7.2")
     implementation("com.google.guava:guava:31.1-jre")
     testImplementation("io.micronaut.test:micronaut-test-rest-assured:3.8.2")
+    implementation(kotlin("stdlib-jdk8"))
 }
 
 application { mainClass.set("com.mycelium.local.Application") }
@@ -40,7 +43,26 @@ java {
     targetCompatibility = JavaVersion.toVersion("17")
 }
 
-tasks { jib { to { image = "gcr.io/myapp/jib-image" } } }
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+tasks.register("sonarqubeexec") {
+    doLast {
+        val sonarProjectKey = "prueba"
+        val sonarHostUrl = "http://localhost:9000"
+        val sonarLogin = "sqp_ab6ee875deb1911a41a168b49c41630e95128b27"
+
+        exec {
+            commandLine = listOf(
+                "./gradlew", "sonar",
+                "-Dsonar.projectKey=$sonarProjectKey",
+                "-Dsonar.host.url=$sonarHostUrl",
+                "-Dsonar.login=$sonarLogin"
+            )
+        }
+    }
+}
 
 graalvmNative.toolchainDetection.set(false)
 

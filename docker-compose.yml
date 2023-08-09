@@ -1,58 +1,35 @@
-name: mycelium-local-dev
-
 services:
-  nginx-proxy:
-    image: nginxproxy/nginx-proxy
+  nginx:
+    image: nginx:latest
     ports:
-      - "6062:80/tcp"
+      - "8080:80"  # Puerto 8080 para Nginx
     volumes:
-      - /var/run/docker.sock:/tmp/docker.sock:ro
-    networks:
-      mycelium-local:
-      mycelium-global:
-        aliases:
-          - mycelium-local
-    environment:
-      - DEFAULT_HOST=mycelium-local
-
-  api:
-    image: localhost/mycelium-local_api:dev
-    expose:
-      - "8080"
-    volumes:
-      - ./api:/app:rw
-      - gradle:/var/lib/gradle:rw
-    build:
-      context: api
-      dockerfile: Dockerfile.dev
+      - ./nginx-config:/etc/nginx/conf.d
     networks:
       - mycelium-local
-      - mycelium-global
-    environment:
-      - VIRTUAL_HOST=mycelium-local
-      - VIRTUAL_PATH=~^/(api|swagger|swagger-ui)
-      - VIRTUAL_PORT=8080
-    depends_on:
-      - db
 
-  api-testing:
-    profiles:
-      - testing
-    image: localhost/mycelium-local_api:dev
-    volumes:
-      - ./api:/app:rw
-      - gradle:/var/lib/gradle:rw
-    build:
-      context: api
-      dockerfile: Dockerfile.dev
-    entrypoint: "/app/test-entrypoint.sh"
-    networks:
-      - mycelium-local
+  # api:
+  #   image: localhost/mycelium-local_api:dev
+  #   ports:
+  #     - "8081:8080"  # Puerto 8081 para el servicio API
+  #   volumes:
+  #     - ./api:/app:rw
+  #     - gradle:/var/lib/gradle:rw
+  #   build:
+  #     context: api
+  #     dockerfile: Dockerfile.dev
+  #   networks:
+  #     - mycelium-local
+  #   environment:
+  #     - VIRTUAL_PATH=~^/(api|swagger|swagger-ui)
+  #     - VIRTUAL_PORT=8080
+  #   depends_on:
+  #     - db
 
   client:
     image: localhost/mycelium-local_client:dev
-    expose:
-      - "3000"
+    ports:
+      - "3000:3000"  # Puerto 3000 para el cliente
     volumes:
       - ./client:/app:rw
     build:
@@ -60,32 +37,71 @@ services:
       dockerfile: Dockerfile.dev
     networks:
       - mycelium-local
-      - mycelium-global
     environment:
-      - VIRTUAL_HOST=mycelium-local
       - VIRTUAL_PATH=/
       - VIRTUAL_PORT=3000
 
-  db:
-    image: container-registry.oracle.com/database/express:21.3.0-xe
+  # db:
+  #   image: container-registry.oracle.com/database/express:21.3.0-xe
+  #   ports:
+  #     - "1521:1521"  # Puerto 1521 para la base de datos
+  #   restart: unless-stopped
+  #   environment:
+  #     ORACLE_PWD: "12345"
+  #   volumes:
+  #     - oracledb:/opt/oracle/oradata
+  #   networks:
+  #     - mycelium-local
+
+  jenkins:
+    image: jenkins/jenkins:lts
     ports:
-      - 2521:1521
-    restart: unless-stopped
-    environment:
-      ORACLE_PWD: "12345"
+      - "7000:8080"  # Puerto 7000 para Jenkins
     volumes:
-      - oracledb:/opt/oracle/oradata
+      - jenkins_data:/var/jenkins_home
     networks:
-      mycelium-local:
-        aliases:
-          - myceliumdb
+      - mycelium-local
+
+  sonarqube:
+    image: sonarqube:lts
+    ports:
+      - "9000:9000"
+    networks:
+      - mycelium-sonarqube
+    environment:
+      SONAR_JDBC_URL: jdbc:postgresql://sonarqube-db:5432/sonar
+      SONAR_JDBC_USERNAME: sonar
+      SONAR_JDBC_PASSWORD: Test12345
+    volumes:
+      - sonarqube_conf:/opt/sonarqube/conf
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+
+  sonarqube-db:
+    image: postgres
+    networks:
+      - mycelium-sonarqube
+    environment:
+      - POSTGRES_USER=sonar
+      - POSTGRES_PASSWORD=Test12345
+    volumes:
+      - postgresql:/var/lib/postgresql
+      - postgresql_data:/var/lib/postgresql/data
+
+#https://gist.github.com/pavankjadda/b8815276318c5f4dfaba8da2c177be5e
 
 volumes:
-  oracledb:
-  gradle:
+  # oracledb: 
+  gradle: 
+  jenkins_data: 
+  sonarqube_conf:
+  sonarqube_data:
+  sonarqube_extensions:
+  postgresql:
+  postgresql_data:
 
 networks:
   mycelium-local:
     driver: bridge
-  mycelium-global:
-    external: true
+  mycelium-sonarqube:
+    driver: bridge
