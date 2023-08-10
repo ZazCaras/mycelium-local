@@ -19,7 +19,7 @@ pipeline {
       steps {
         script {
           nodejs('sonarqube-client') {
-            def scanner = tool 'sonarqube-tool-scanner';
+            def scanner = tool 'sonarqube-front';
             dir('client') {
               withSonarQubeEnv() {
                 sh "${scanner}/bin/sonar-scanner"
