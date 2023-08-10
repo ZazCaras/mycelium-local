@@ -54,7 +54,7 @@ services:
   #     - mycelium-local
 
   jenkins:
-    image: jenkins/jenkins:lts-jdk17
+    image: jenkins/jenkins:lts-jdk17 
     ports:
       - "7000:8080"  # Puerto 7000 para Jenkins
     volumes:
