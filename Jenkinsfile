@@ -18,9 +18,29 @@ pipeline {
     stage('SonarQube Analysis') {
       steps {
           script {
+              def result
               withSonarQubeEnv('sonarqube') {
                   dir('api') {
-                      sh "./gradlew sonar"
+                    sh "./gradlew sonar"
+                    def rutaSonar = 'http://sonarqube:9000'
+                    def project = "api"
+                    def response = "${rutaSonar}/api/measures/component?component=${project}&metricKeys=sqale_index"
+                    result = sh(script: "curl -s ${rutaSonar}/api/qualitygates/project_status?projectKey=${project}", returnStdout: true).trim()
+                  }
+                  if (sonarqubeResult == 'PASSED') {
+                      echo "El análisis de SonarQube PASÓ."
+                      mail (
+                          to: "ddvallejoj@gmail.com", 
+                          subject: "Sonar Success", 
+                          body: "ola"
+                      )
+                  } else {
+                      echo "El análisis de SonarQube FALLÓ."
+                      mail (
+                          to: "ddvallejoj@gmail.com", 
+                          subject: "Sonar Failed", 
+                          body: "ola"
+                      )
                   }
               }
           }
@@ -29,11 +49,11 @@ pipeline {
   }
   post {
     always {
-        mail (
-            to: "ddvallejoj@gmail.com", 
-            subject: "Jenkins", 
-            body: "end"
-        )
+      mail (
+          to: "ddvallejoj@gmail.com", 
+          subject: "Jenkins", 
+          body: "end"
+      )
     }
   }
 }
