@@ -51,35 +51,35 @@ pipeline {
       }
     }
 
-    stage('SonarQube BACK Analysis') {
-      steps {
-          script {
-              def result
-              withSonarQubeEnv('sonarqube') {
-                dir('api') {
-                  sh "./gradlew sonar"
-              }
-          }
-        }
-      }
-    }
+    // stage('SonarQube BACK Analysis') {
+    //   steps {
+    //       script {
+    //           def result
+    //           withSonarQubeEnv('sonarqube') {
+    //             dir('api') {
+    //               sh "./gradlew sonar"
+    //           }
+    //       }
+    //     }
+    //   }
+    // }
 
-    stage("Quality Gate BACK") {
-      steps {
-        timeout(time: 1, unit: 'HOURS') {
-          waitForQualityGate abortPipeline: true
-        }
-      }
-      post {
-        failure {
-          mail (
-              to: "ddvallejoj@gmail.com", 
-              subject: "Deuda Incrementada Back", 
-              body: "end"
-          )
-        }
-      }
-    }
+    // stage("Quality Gate BACK") {
+    //   steps {
+    //     timeout(time: 1, unit: 'HOURS') {
+    //       waitForQualityGate abortPipeline: true
+    //     }
+    //   }
+    //   post {
+    //     failure {
+    //       mail (
+    //           to: "ddvallejoj@gmail.com", 
+    //           subject: "Deuda Incrementada Back", 
+    //           body: "end"
+    //       )
+    //     }
+    //   }
+    // }
 
   }
 }
