@@ -13,7 +13,7 @@ pipeline {
             sh "./gradlew test"
           }
         }
-      }
+      } 
     }
     stage('SonarQube Analysis') {
       steps {
