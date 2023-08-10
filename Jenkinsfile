@@ -1,11 +1,14 @@
 pipeline {
+
   agent any
+
   stages {
     stage('SCM') {
       steps { 
           checkout scm
         }
-      } 
+    } 
+
     stage("Unit Testing") {
       steps {
         script {
@@ -15,6 +18,7 @@ pipeline {
         } 
       } 
     }
+
     stage('SonarQube FRONT Analysis') {
       steps {
         script {
@@ -36,14 +40,14 @@ pipeline {
           waitForQualityGate abortPipeline: true
         }
       }
-    }
-    post {
-      failure {
-        mail (
-            to: "ddvallejoj@gmail.com", 
-            subject: "Deuda Incrementada Front", 
-            body: "end"
-        )
+      post {
+        failure {
+          mail (
+              to: "ddvallejoj@gmail.com", 
+              subject: "Deuda Incrementada Front", 
+              body: "end"
+          )
+        }
       }
     }
 
@@ -59,21 +63,23 @@ pipeline {
         }
       }
     }
+
     stage("Quality Gate BACK") {
       steps {
         timeout(time: 1, unit: 'HOURS') {
           waitForQualityGate abortPipeline: true
         }
       }
-    }
-    post {
-      failure {
-        mail (
-            to: "ddvallejoj@gmail.com", 
-            subject: "Deuda Incrementada Back", 
-            body: "end"
-        )
+      post {
+        failure {
+          mail (
+              to: "ddvallejoj@gmail.com", 
+              subject: "Deuda Incrementada Back", 
+              body: "end"
+          )
+        }
       }
     }
+
   }
 }
