@@ -158,10 +158,6 @@ public class CartController {
     public List<CartUnifiedResponse> list(Authentication authentication) {
         var userMap = authentication.getAttributes();
         var userId = (int) (long) userMap.get("id");
-        // int e = 0;
-        // for (int i = 0; i < 10; i++){
-        //     e+=1;
-        // }
         List<CartUnifiedResponse> res = new ArrayList<CartUnifiedResponse>();
         for (Cart cart : cartRepo.findByUserId(userId)) {
             var pics = new ArrayList<String>();
