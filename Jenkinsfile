@@ -13,7 +13,7 @@ pipeline {
       steps {
         script {
           dir('api') {
-            sh "./gradlew test"   
+            sh "./gradlew test"    
           }
         }     
       }
