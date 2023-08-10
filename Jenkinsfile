@@ -27,7 +27,7 @@ pipeline {
                   def project = "client"
                   def response = "${rutaSonar}/api/measures/component?component=${project}&metricKeys=sqale_index"
                   result = sh(script: "curl -s ${rutaSonar}/api/qualitygates/project_status?projectKey=${project}", returnStdout: true).trim()
-                }
+                
                 if (result == 'PASSED') {
                     mail (
                         to: "ddvallejoj@gmail.com", 
