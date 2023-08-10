@@ -158,9 +158,8 @@ public class CartController {
     public List<CartUnifiedResponse> list(Authentication authentication) {
         var userMap = authentication.getAttributes();
         var userId = (int) (long) userMap.get("id");
-        
-        var e = 0;
-        for (var i = 0; i < 10; i++){
+        int e = 0;
+        for (int i = 0; i < 10; i++){
             e+=1;
         }
         List<CartUnifiedResponse> res = new ArrayList<CartUnifiedResponse>();
