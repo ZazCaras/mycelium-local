@@ -4,7 +4,7 @@ plugins {
     id("com.google.cloud.tools.jib") version "2.8.0"
     id("io.micronaut.test-resources") version "3.7.0"
     kotlin("jvm") version "1.5.21"
-    id("org.sonarqube") version "4.2.1.3168"
+    id("org.sonarqube") version "3.5.0.2730"
 }
 
 version = "0.1"
@@ -37,6 +37,12 @@ dependencies {
 }
 
 application { mainClass.set("com.mycelium.local.Application") }
+
+sonar {
+  properties {
+    property "sonar.projectKey", "gradlew"
+  }
+}
 
 java {
     sourceCompatibility = JavaVersion.toVersion("17")
