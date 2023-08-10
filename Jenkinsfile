@@ -15,7 +15,22 @@ pipeline {
         } 
       } 
     }
-    stage('SonarQube Analysis') {
+    stage('SonarQube FRONT Analysis') {
+      steps {
+        script {
+          nodejs('sonarqube-client') {
+            def scanner = tool 'sonarqube-tool-scanner';
+            dir('client') {
+              withSonarQubeEnv() {
+                sh "${scanner}/bin/sonar-scanner"
+              }
+            }
+          }
+        }
+      }
+    }
+
+    stage('SonarQube BACK Analysis') {
       steps {
           script {
               def result
@@ -28,17 +43,15 @@ pipeline {
                     result = sh(script: "curl -s ${rutaSonar}/api/qualitygates/project_status?projectKey=${project}", returnStdout: true).trim()
                   }
                   if (result == 'PASSED') {
-                      echo "El análisis de SonarQube PASÓ."
                       mail (
                           to: "ddvallejoj@gmail.com", 
-                          subject: "Sonar Success", 
+                          subject: "Deuda Técnica Reducida", 
                           body: "ola"
                       )
                   } else {
-                      echo "El análisis de SonarQube FALLÓ."
                       mail (
                           to: "ddvallejoj@gmail.com", 
-                          subject: "Sonar Failed", 
+                          subject: "Duda Técnica Incrementada", 
                           body: "ola"
                       )
                   }
