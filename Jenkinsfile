@@ -6,6 +6,15 @@ pipeline {
           checkout scm
         }
       }
+    stage("Unit Testing") {
+      steps {
+        script {
+          dir('api') {
+            sh "./gradlew test"
+          }
+        }
+      }
+    }
     stage('SonarQube Analysis') {
       steps {
           script {
