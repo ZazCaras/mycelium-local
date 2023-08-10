@@ -67,8 +67,7 @@ pipeline {
     stage("Quality Gate BACK") {
       steps {
         timeout(time: 1, unit: 'HOURS') {
-          def qualitygate = waitForQualityGate()
-          echo qualitygate.status
+          echo waitForQualityGate().status
           waitForQualityGate abortPipeline: true
         }
       }
