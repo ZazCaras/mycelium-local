@@ -16,7 +16,7 @@ pipeline {
             sh "./gradlew test" 
           }
         }  
-      } 
+      }  
     }
 
     stage('SonarQube FRONT Analysis') {
