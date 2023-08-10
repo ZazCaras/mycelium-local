@@ -12,7 +12,7 @@ pipeline {
     stage("Unit Testing") {
       steps {   
         script {
-          dir('api') {
+          dir('api') {   
             sh "./gradlew test"
           }
         } 
