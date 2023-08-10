@@ -27,7 +27,7 @@ pipeline {
                     def response = "${rutaSonar}/api/measures/component?component=${project}&metricKeys=sqale_index"
                     result = sh(script: "curl -s ${rutaSonar}/api/qualitygates/project_status?projectKey=${project}", returnStdout: true).trim()
                   }
-                  if (sonarqubeResult == 'PASSED') {
+                  if (result == 'PASSED') {
                       echo "El análisis de SonarQube PASÓ."
                       mail (
                           to: "ddvallejoj@gmail.com", 
