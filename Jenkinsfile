@@ -3,8 +3,23 @@ node {
     checkout scm
   }
   stage('SonarQube Analysis') {
-    withSonarQubeEnv() {
-      sh "./gradlew sonar"
+    steps {
+        script {
+            withSonarQubeEnv('sonarqube') {
+                dir('api') {
+                    sh "./gradlew sonar"
+                }
+            }
+        }
+    }
+  }
+  post {
+    always {
+        mail (
+            to: "ddvallejoj@gmail.com", 
+            subject: "Jenkins", 
+            body: "end"
+        )
     }
   }
 }

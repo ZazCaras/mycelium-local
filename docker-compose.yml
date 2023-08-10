@@ -68,6 +68,7 @@ services:
       - "9000:9000"
     networks:
       - mycelium-sonarqube
+      - mycelium-local
     environment:
       SONAR_JDBC_URL: jdbc:postgresql://sonarqube-db:5432/sonar
       SONAR_JDBC_USERNAME: sonar
