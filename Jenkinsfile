@@ -18,8 +18,8 @@ pipeline {
     stage('SonarQube FRONT Analysis') {
       steps {
         script {
-          nodejs('sonarqube-client') {
-            def scanner = tool 'sonarqube-front';
+          nodejs('sonarqube-front') {
+            def scanner = tool 'sonarqube-tool-scanner';
             dir('client') {
               withSonarQubeEnv() {
                 sh "${scanner}/bin/sonar-scanner"
