@@ -1,18 +1,19 @@
 pipeline {
   agent any
-  
-  stage('SCM') {
-    checkout scm
-  }
-  stage('SonarQube Analysis') {
-    steps {
-        script {
-            withSonarQubeEnv('sonarqube') {
-                dir('api') {
-                    sh "./gradlew sonar"
-                }
-            }
-        }
+  stages {
+    stage('SCM') {
+        checkout scm
+      }
+    stage('SonarQube Analysis') {
+      steps {
+          script {
+              withSonarQubeEnv('sonarqube') {
+                  dir('api') {
+                      sh "./gradlew sonar"
+                  }
+              }
+          }
+      }
     }
   }
   post {
