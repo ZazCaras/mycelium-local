@@ -32,7 +32,7 @@ pipeline {
           }
         }
       }
-    }
+    } 
 
     stage("Quality Gate FRONT") {
       steps {
