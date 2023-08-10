@@ -15,7 +15,7 @@ pipeline {
           dir('api') {
             sh "./gradlew test" 
           }
-        } 
+        }  
       } 
       post {
         failure {
