@@ -5,6 +5,7 @@ plugins {
     id("io.micronaut.test-resources") version "3.7.0"
     kotlin("jvm") version "1.5.21"
     id("org.sonarqube") version "3.5.0.2730"
+    jacoco
 }
 
 version = "0.1"
@@ -48,6 +49,17 @@ sonar {
 java {
     sourceCompatibility = JavaVersion.toVersion("17")
     targetCompatibility = JavaVersion.toVersion("17")
+}
+
+tasks.test {
+    finalizedBy(tasks.jacocoTestReport)
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    reports {
+        xml.isEnabled = true
+    }
 }
 
 graalvmNative.toolchainDetection.set(false)
