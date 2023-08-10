@@ -20,31 +20,30 @@ pipeline {
         script {
           nodejs('sonarqube-front') {
             def scanner = tool 'sonarqube-tool-scanner';
-            dir('client') {
-              withSonarQubeEnv() {
+            withSonarQubeEnv() {
+              dir('client') {
                 sh "${scanner}/bin/sonar-scanner"
-                def rutaSonar = 'http://sonarqube:9000'
-                  def project = "client"
-                  def response = "${rutaSonar}/api/measures/component?component=${project}&metricKeys=sqale_index"
-                  result = sh(script: "curl -s ${rutaSonar}/api/qualitygates/project_status?projectKey=${project}", returnStdout: true).trim()
-                
-                if (result == 'PASSED') {
-                    mail (
-                        to: "ddvallejoj@gmail.com", 
-                        subject: "FRONT Mejorado", 
-                        body: "Front"
-                    )
-                } else {
-                    mail (
-                        to: "ddvallejoj@gmail.com", 
-                        subject: "FRONT Incrementado", 
-                        body: "Front"
-                    )
-                }
               }
             }
           }
         }
+      }
+    }
+
+    stage("Quality Gate FRONT") {
+      steps {
+        timeout(time: 1, unit: 'HOURS') {
+          waitForQualityGate abortPipeline: true
+        }
+      }
+    }
+    post {
+      failure {
+        mail (
+            to: "ddvallejoj@gmail.com", 
+            subject: "Deuda Incrementada Front", 
+            body: "end"
+        )
       }
     }
 
@@ -53,38 +52,28 @@ pipeline {
           script {
               def result
               withSonarQubeEnv('sonarqube') {
-                  dir('api') {
-                    sh "./gradlew sonar"
-                    def rutaSonar = 'http://sonarqube:9000'
-                    def project = "gradlew"
-                    def response = "${rutaSonar}/api/measures/component?component=${project}&metricKeys=sqale_index"
-                    result = sh(script: "curl -s ${rutaSonar}/api/qualitygates/project_status?projectKey=${project}", returnStdout: true).trim()
-                  }
-                  if (result == 'PASSED') {
-                      mail (
-                          to: "ddvallejoj@gmail.com", 
-                          subject: "BACK Mejorado", 
-                          body: "Back"
-                      )
-                  } else {
-                      mail (
-                          to: "ddvallejoj@gmail.com", 
-                          subject: "BACK Incrementado", 
-                          body: "Back"
-                      )
-                  }
+                dir('api') {
+                  sh "./gradlew sonar"
               }
           }
+        }
       }
     }
-  }
-  post {
-    always {
-      mail (
-          to: "ddvallejoj@gmail.com", 
-          subject: "Jenkins Finalizado", 
-          body: "end"
-      )
+    stage("Quality Gate BACK") {
+      steps {
+        timeout(time: 1, unit: 'HOURS') {
+          waitForQualityGate abortPipeline: true
+        }
+      }
+    }
+    post {
+      failure {
+        mail (
+            to: "ddvallejoj@gmail.com", 
+            subject: "Deuda Incrementada Back", 
+            body: "end"
+        )
+      }
     }
   }
 }
