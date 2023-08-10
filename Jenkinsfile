@@ -18,7 +18,7 @@ pipeline {
         } 
       } 
     }
-
+   
     stage('SonarQube FRONT Analysis') {
       steps {
         script {
