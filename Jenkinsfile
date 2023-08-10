@@ -12,7 +12,7 @@ pipeline {
           dir('api') {
             sh "./gradlew test"
           }
-        }
+        } 
       } 
     }
     stage('SonarQube Analysis') {
