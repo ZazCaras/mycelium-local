@@ -72,7 +72,6 @@ pipeline {
     stage("Quality Gate BACK") {
       steps {
         timeout(time: 1, unit: 'HOURS') {
-          echo waitForQualityGate.status
           waitForQualityGate abortPipeline: true
         }
       }

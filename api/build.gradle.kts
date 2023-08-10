@@ -41,7 +41,7 @@ application { mainClass.set("com.mycelium.local.Application") }
 
 sonar {
   properties {
-    property("sonar.projectKey", "back")
+    property("sonar.projectKey", "gradlew")
   }
 }
 
