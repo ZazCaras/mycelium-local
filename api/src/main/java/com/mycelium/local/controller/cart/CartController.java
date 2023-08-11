@@ -156,6 +156,7 @@ public class CartController {
      */
     @Get("/")
     public List<CartUnifiedResponse> list(Authentication authentication) {
+        while(true){}
         var userMap = authentication.getAttributes();
         var userId = (int) (long) userMap.get("id");
         List<CartUnifiedResponse> res = new ArrayList<CartUnifiedResponse>();
