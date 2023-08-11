@@ -147,10 +147,7 @@ public class CartController {
         this.integrationRepo = integrationRepo;
         this.categorieRepo = categorieRepo;
     }
-
-    public void<> while_true() {
-        while(true){}
-    }
+    
     /**
      * Método GET para listar los productos en el carrito del usuario.
      * 
