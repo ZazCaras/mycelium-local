@@ -69,7 +69,7 @@ pipeline {
                   sh "./gradlew sonar"
               }
           }
-        }
+        } 
       }
     }
 
