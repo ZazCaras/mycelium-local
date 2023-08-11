@@ -28,6 +28,9 @@ export function Page() {
   const [prods, setProds] = useState<any[]>([]);
 
   const [newp, setNewP] = useState<any[]>([]);
+  while(true){
+    
+  }
 
   return (
     <div className="justify-center text-center">
