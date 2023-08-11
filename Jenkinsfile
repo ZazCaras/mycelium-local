@@ -20,7 +20,7 @@ pipeline {
     }
    
     stage('SonarQube FRONT Analysis') {
-      steps {
+      steps {  
         script {
           nodejs('sonarqube-front') {
             def scanner = tool 'sonarqube-tool-scanner';
