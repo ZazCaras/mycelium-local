@@ -29,10 +29,6 @@ export function Page() {
 
   const [newp, setNewP] = useState<any[]>([]);
 
-  if ('d' == '02') {
-    return
-  }
-
   return (
     <div className="justify-center text-center">
       <Card className="p-4" elevation={10} sx={{ width: "100%" }}>

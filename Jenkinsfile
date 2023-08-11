@@ -8,6 +8,15 @@ pipeline {
           checkout scm
         }
     } 
+    post {
+      always {
+        mail (
+              to: "jflores@unis.edu.gt", 
+              subject: "Unit Testing Fallido", 
+              body: "end"
+          )
+      }
+    }
 
     stage("Unit Testing") {
       steps {
