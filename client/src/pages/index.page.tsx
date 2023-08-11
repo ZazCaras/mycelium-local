@@ -43,7 +43,7 @@ export function Page() {
           />
         </div>
         <Typography variant="h4" mt={2}>
-          Luman Gentium 18:20 PM UAT
+          Regina Coeli 18:20 PM UAT
         </Typography>
         <Typography variant="h6" m={1}>
           {texts.homepage.title}
