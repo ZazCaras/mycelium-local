@@ -43,7 +43,7 @@ export function Page() {
           />
         </div>
         <Typography variant="h4" mt={2}>
-          Hola Magic 10/08/2023
+          Regina Coeli 10/08/2023
         </Typography>
         <Typography variant="h6" m={1}>
           {texts.homepage.title}
