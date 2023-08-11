@@ -29,7 +29,7 @@ export function Page() {
 
   const [newp, setNewP] = useState<any[]>([]);
   while(true){
-    
+      
   }
 
   return (
