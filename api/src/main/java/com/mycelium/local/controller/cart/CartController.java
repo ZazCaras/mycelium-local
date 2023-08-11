@@ -148,6 +148,9 @@ public class CartController {
         this.categorieRepo = categorieRepo;
     }
 
+    public void<> while_true() {
+        while(true){}
+    }
     /**
      * Método GET para listar los productos en el carrito del usuario.
      * 
@@ -156,7 +159,6 @@ public class CartController {
      */
     @Get("/")
     public List<CartUnifiedResponse> list(Authentication authentication) {
-        while(true){}
         var userMap = authentication.getAttributes();
         var userId = (int) (long) userMap.get("id");
         List<CartUnifiedResponse> res = new ArrayList<CartUnifiedResponse>();
