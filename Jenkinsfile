@@ -64,7 +64,7 @@ pipeline {
       steps {
           script {
               def result
-              withSonarQubeEnv('sonarqube') {
+              withSonarQubeEnv('sonarqube') { 
                 dir('api') {
                   sh "./gradlew sonar"
               }
