@@ -17,6 +17,16 @@ pipeline {
           }
         } 
       } 
+      post {
+        failure {
+          mail (
+              to: "jflores@unis.edu.gt", 
+              subject: "Unit Testing Fallido", 
+              body: "end"
+          )
+        }
+      }
+      
     }
 
     stage('SonarQube FRONT Analysis') {
@@ -43,7 +53,7 @@ pipeline {
       post {
         failure {
           mail (
-              to: "ddvallejoj@gmail.com", 
+              to: "jflores@unis.edu.gt", 
               subject: "Deuda Incrementada Front", 
               body: "end"
           )
@@ -73,7 +83,7 @@ pipeline {
     //   post {
     //     failure {
     //       mail (
-    //           to: "ddvallejoj@gmail.com", 
+    //           to: "jflores@unis.edu.gt", 
     //           subject: "Deuda Incrementada Back", 
     //           body: "end"
     //       )
