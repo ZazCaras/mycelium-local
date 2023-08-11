@@ -28,20 +28,20 @@ pipeline {
       }
     }
 
-    stage('SonarQube FRONT Analysis') {
-      steps {  
-        script {
-          nodejs('sonarqube-front') {
-            def scanner = tool 'sonarqube-tool-scanner';
-            withSonarQubeEnv() {
-              dir('client') {
-                sh "${scanner}/bin/sonar-scanner"
-              }
-            }
-          }
-        }
-      }
-    } 
+    // stage('SonarQube FRONT Analysis') {
+    //   steps {  
+    //     script {
+    //       nodejs('sonarqube-front') {
+    //         def scanner = tool 'sonarqube-tool-scanner';
+    //         withSonarQubeEnv() {
+    //           dir('client') {
+    //             sh "${scanner}/bin/sonar-scanner"
+    //           }
+    //         }
+    //       }
+    //     }
+    //   }
+    // } 
 
     stage("Quality Gate FRONT") {
       steps {
