@@ -147,7 +147,7 @@ public class CartController {
         this.integrationRepo = integrationRepo;
         this.categorieRepo = categorieRepo;
     }
-
+    
     /**
      * Método GET para listar los productos en el carrito del usuario.
      * 
