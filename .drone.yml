@@ -3,10 +3,6 @@ type: docker
 name: default
 
 steps:
-- name: scm
-  image: alpine/git
-  commands:
-  - checkout scm
 
 - name: unit-testing
   image: openjdk:11
