@@ -21,9 +21,9 @@ pipeline:
       steps:
         - script:
             nodejs: "sonarqube-front"
-        - script:
-            scanner: tool "sonarqube-tool-scanner"
-              withSonarQubeEnv:
+              scanner: tool "sonarqube-tool-scanner"
+            script:
+              withSonarQubeEnv: "sonarqube"
                 dir('client'):
                   sh: "${scanner}/bin/sonar-scanner"
 
@@ -32,8 +32,9 @@ pipeline:
         - timeout:
             time: 1
             unit: HOURS
-        - waitForQualityGate:
-            abortPipeline: true
+          script:
+            waitForQualityGate:
+              abortPipeline: true
       post:
         failure:
           mail:
@@ -54,8 +55,9 @@ pipeline:
         - timeout:
             time: 1
             unit: HOURS
-        - waitForQualityGate:
-            abortPipeline: true
+          script:
+            waitForQualityGate:
+              abortPipeline: true
       post:
         failure:
           mail:
