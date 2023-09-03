@@ -40,8 +40,10 @@ pipeline:
 
     - stage: "Quality Gate FRONT"
       steps:
-        - timeout: 1
-            unit: HOURS
+        - timeout:
+            script: |
+              time: 1
+              unit: HOURS
           script:
             script: |
               waitForQualityGate abortPipeline: true
@@ -71,8 +73,10 @@ pipeline:
 
     - stage: "Quality Gate BACK"
       steps:
-        - timeout: 1
-            unit: HOURS
+        - timeout:
+            script: |
+              time: 1
+              unit: HOURS
           script:
             script: |
               waitForQualityGate abortPipeline: true
