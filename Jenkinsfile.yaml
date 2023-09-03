@@ -21,6 +21,7 @@ pipeline:
       steps:
         - script:
             nodejs: "sonarqube-front"
+            script:
               scanner: tool "sonarqube-tool-scanner"
               withSonarQubeEnv:
                 dir('client'):
