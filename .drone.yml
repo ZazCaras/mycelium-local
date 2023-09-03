@@ -11,7 +11,7 @@ steps:
 
 #https://plugins.drone.io/plugins/sonar-plugin
 #https://plugins.drone.io/plugins/sonar-node-plugin
-  -name: analysis-front
+- name: analysis-front
   image: aosapps/drone-sonar-plugin
   settings:
     sonar_host:
