@@ -3,12 +3,11 @@ type: docker
 name: default
 
 steps:
-
 - name: unit-testing
-  image: openjdk:17-bullseye
+  image: gradle:jdk17
   commands:
   - cd api
-  - ./gradlew test
+  - gradle test
 
 #https://plugins.drone.io/plugins/sonar-plugin
 #https://plugins.drone.io/plugins/sonar-node-plugin
