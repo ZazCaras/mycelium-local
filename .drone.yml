@@ -5,7 +5,7 @@ name: default
 steps:
 
 - name: unit-testing
-  image: gradlw:7.5.1-jdk17
+  image: openjdk:17-bullseye
   commands:
   - cd api
   - ./gradlew test
