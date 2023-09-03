@@ -7,11 +7,10 @@ pipeline:
 
     - stage: "Unit Testing"
       steps:
-        - script:
-            script: |
-              dir('api') {
-                sh "./gradlew test"
-              }
+        - dir:
+            dir: 'api'
+            script:
+              sh "./gradlew test"
       post:
         failure:
           mail:
@@ -41,9 +40,8 @@ pipeline:
     - stage: "Quality Gate FRONT"
       steps:
         - timeout:
-            script: |
-              time: 1
-              unit: HOURS
+            time: 1
+            unit: HOURS
           script:
             script: |
               waitForQualityGate abortPipeline: true
@@ -74,9 +72,8 @@ pipeline:
     - stage: "Quality Gate BACK"
       steps:
         - timeout:
-            script: |
-              time: 1
-              unit: HOURS
+            time: 1
+            unit: HOURS
           script:
             script: |
               waitForQualityGate abortPipeline: true
