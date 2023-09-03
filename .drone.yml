@@ -5,7 +5,7 @@ name: default
 steps:
 
 - name: unit-testing
-  image: openjdk:11
+  image: openjdk:17
   commands:
   - cd api
   - ./gradlew test
