@@ -21,17 +21,19 @@ pipeline:
       steps:
         - script:
             nodejs: "sonarqube-front"
-            script:
-              scanner: tool "sonarqube-tool-scanner"
+        - script:
+            scanner: tool "sonarqube-tool-scanner"
               withSonarQubeEnv:
                 dir('client'):
                   sh: "${scanner}/bin/sonar-scanner"
 
     - stage: "Quality Gate FRONT"
       steps:
-        - timeout: 1 HOURS
-            waitForQualityGate:
-              abortPipeline: true
+        - timeout:
+            time: 1
+            unit: HOURS
+        - waitForQualityGate:
+            abortPipeline: true
       post:
         failure:
           mail:
@@ -49,9 +51,11 @@ pipeline:
 
     - stage: "Quality Gate BACK"
       steps:
-        - timeout: 1 HOURS
-            waitForQualityGate:
-              abortPipeline: true
+        - timeout:
+            time: 1
+            unit: HOURS
+        - waitForQualityGate:
+            abortPipeline: true
       post:
         failure:
           mail:
