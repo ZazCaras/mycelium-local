@@ -8,8 +8,10 @@ pipeline:
     - stage: "Unit Testing"
       steps:
         - script:
-            dir('api'):
-              sh: "./gradlew test"
+            script: |
+              dir('api') {
+                sh "./gradlew test"
+              }
       post:
         failure:
           mail:
@@ -20,21 +22,29 @@ pipeline:
     - stage: "SonarQube FRONT Analysis"
       steps:
         - script:
-            nodejs: "sonarqube-front"
-              scanner: tool "sonarqube-tool-scanner"
-            script:
-              withSonarQubeEnv: "sonarqube"
-                dir('client'):
-                  sh: "${scanner}/bin/sonar-scanner"
+            script: |
+              nodejs('sonarqube-front') {
+                def scanner = tool 'sonarqube-tool-scanner'
+                withSonarQubeEnv() {
+                  dir('client') {
+                    sh "${scanner}/bin/sonar-scanner"
+                  }
+                }
+              }
+      post:
+        failure:
+          mail:
+            to: "jflores@unis.edu.gt, dvallejo@unis.edu.t"
+            subject: "Deuda Incrementada Front"
+            body: "Se ha detectado un incremento en la deuda técnica del front-end. Por favor revise su código."
 
     - stage: "Quality Gate FRONT"
       steps:
-        - timeout:
-            time: 1
+        - timeout: 1
             unit: HOURS
           script:
-            waitForQualityGate:
-              abortPipeline: true
+            script: |
+              waitForQualityGate abortPipeline: true
       post:
         failure:
           mail:
@@ -45,19 +55,27 @@ pipeline:
     - stage: "SonarQube BACK Analysis"
       steps:
         - script:
-            def result
-            withSonarQubeEnv: "sonarqube"
-              dir('api'):
-                sh: "./gradlew sonar"
+            script: |
+              def result
+              withSonarQubeEnv('sonarqube') {
+                dir('api') {
+                  sh "./gradlew sonar"
+                }
+              }
+      post:
+        failure:
+          mail:
+            to: "jflores@unis.edu.gt, dvallejo@unis.edu.t"
+            subject: "Deuda Incrementada Back"
+            body: "Se ha detectado un incremento en la deuda técnica del back-end. Por favor revise su código."
 
     - stage: "Quality Gate BACK"
       steps:
-        - timeout:
-            time: 1
+        - timeout: 1
             unit: HOURS
           script:
-            waitForQualityGate:
-              abortPipeline: true
+            script: |
+              waitForQualityGate abortPipeline: true
       post:
         failure:
           mail:
