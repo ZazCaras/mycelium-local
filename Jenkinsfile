@@ -20,9 +20,9 @@ pipeline {
       post {
         failure {
           mail (
-              to: "jflores@unis.edu.gt", 
-              subject: "Unit Testing Fallado", 
-              body: "end"
+              to: "jflores@unis.edu.gt, dvallejo@unis.edu.t", 
+              subject: "Error en el Unit Testing", 
+              body: "Se ha producido un error en el Unit Testing. Por favor verifique el error."
           )
         }
       }
@@ -52,9 +52,9 @@ pipeline {
       post {
         failure {
           mail (
-              to: "jflores@unis.edu.gt", 
+              to: "jflores@unis.edu.gt, dvallejo@unis.edu.t", 
               subject: "Deuda Incrementada Front", 
-              body: "end"
+              body: "Se ha detectado un incremento en la deuda técnica del front-end. Por favor revise su código."
           )
         }
       } 
@@ -82,9 +82,9 @@ pipeline {
       post {
         failure {
           mail (
-              to: "jflores@unis.edu.gt", 
+              to: "jflores@unis.edu.gt, dvallejo@unis.edu.t", 
               subject: "Deuda Incrementada Back", 
-              body: "Este es un while malo :)"
+              body: "Se ha detectado un incremento en la deuda técnica del back-end. Por favor revise su código."
           )
         }
       }
