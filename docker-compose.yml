@@ -53,14 +53,14 @@ services:
   #   networks:
   #     - mycelium-local
 
-  # jenkins:
-  #   image: jenkins/jenkins:lts-jdk17 
-  #   ports:
-  #     - "7000:8080"  # Puerto 7000 para Jenkins
-  #   volumes:
-  #     - jenkins_data:/var/jenkins_home
-  #   networks:
-  #     - mycelium-local
+  jenkins:
+    image: jenkins/jenkins:lts-jdk17 
+    ports:
+      - "7000:8080"  # Puerto 7000 para Jenkins
+    volumes:
+      - jenkins_data:/var/jenkins_home
+    networks:
+      - mycelium-local
 
   drone: 
     image: drone/drone:2
@@ -72,11 +72,10 @@ services:
       - /var/lib/drone:/data
     environment:
       - DRONE_GITHUB_CLIENT_ID=c85a7d32364613774834
-      - DRONE_GITHUB_CLIENT_SECRET=5995a5cad292d7be3967f02dc13ccceaa51d7627 
+      - DRONE_GITHUB_CLIENT_SECRET=b4b7aaa41cee5a20d41bfe228907df5dee2f5185 
       - DRONE_RPC_SECRET=98603fac90abd2dd2fb4de2c6997e573
-      - DRONE_SERVER_HOST=147.185.221.16:39932
+      - DRONE_SERVER_HOST=150.136.162.189:9051
       - DRONE_SERVER_PROTO=http
-    restart: always
 
   drone-runner: 
     image: drone/drone-runner-docker:1
@@ -92,7 +91,6 @@ services:
       - DRONE_RUNNER_NAME=mycelium-runner
     ports:
       - "7002:7002"
-    restart: always
 
   sonarqube:
     image: sonarqube:lts
