@@ -1,5 +1,7 @@
 pipeline:
-  agent: any
+  agent:
+    any
+
   stages:
     - stage: SCM
       steps:
@@ -7,10 +9,10 @@ pipeline:
 
     - stage: "Unit Testing"
       steps:
-        - dir:
-            dir: 'api'
-            script:
+        - script:
+            dir('api') {
               sh "./gradlew test"
+            }
       post:
         failure:
           mail:
@@ -21,15 +23,14 @@ pipeline:
     - stage: "SonarQube FRONT Analysis"
       steps:
         - script:
-            script: |
-              nodejs('sonarqube-front') {
-                def scanner = tool 'sonarqube-tool-scanner'
-                withSonarQubeEnv() {
-                  dir('client') {
-                    sh "${scanner}/bin/sonar-scanner"
-                  }
+            nodejs('sonarqube-front') {
+              def scanner = tool 'sonarqube-tool-scanner'
+              withSonarQubeEnv('sonarqube') {
+                dir('client') {
+                  sh "${scanner}/bin/sonar-scanner"
                 }
               }
+            }
       post:
         failure:
           mail:
@@ -42,9 +43,8 @@ pipeline:
         - timeout:
             time: 1
             unit: HOURS
-          script:
-            script: |
-              waitForQualityGate abortPipeline: true
+        - script:
+            waitForQualityGate abortPipeline: true
       post:
         failure:
           mail:
@@ -55,13 +55,11 @@ pipeline:
     - stage: "SonarQube BACK Analysis"
       steps:
         - script:
-            script: |
-              def result
-              withSonarQubeEnv('sonarqube') {
-                dir('api') {
-                  sh "./gradlew sonar"
-                }
+            withSonarQubeEnv('sonarqube') {
+              dir('api') {
+                sh "./gradlew sonar"
               }
+            }
       post:
         failure:
           mail:
@@ -74,9 +72,8 @@ pipeline:
         - timeout:
             time: 1
             unit: HOURS
-          script:
-            script: |
-              waitForQualityGate abortPipeline: true
+        - script:
+            waitForQualityGate abortPipeline: true
       post:
         failure:
           mail:
