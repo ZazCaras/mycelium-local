@@ -6,7 +6,7 @@ steps:
 - name: unit-testing
   image: gradle:7.5.1-jdk17
   commands:
-  - cd api  
+  - cd api
   - gradle test
 
 #https://plugins.drone.io/plugins/sonar-plugin
@@ -15,13 +15,13 @@ steps:
   image: aosapps/drone-sonar-plugin
   settings:
     sonar_host:
-      from_secret: http://localhost:9000
+      from_secret: http://sonarqube-front:9000
     sonar_token: 
       from_secret: sqp_b899ad475e92e5aaea6048a4660305754b5f886d
       # from_secret:
       # from_secret: 
       # m
-      # d 
+      # d
       # u 
 
 - name: sonarqube-back-analysis
