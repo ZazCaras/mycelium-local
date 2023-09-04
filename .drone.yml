@@ -15,7 +15,7 @@ steps:
   image: aosapps/drone-sonar-plugin
   settings:
     sonar_host:
-      from_secret: http://sonarqube-front:9000
+      from_secret: http://150.136.162.189:9055
     sonar_token: 
       from_secret: sqp_b899ad475e92e5aaea6048a4660305754b5f886d
       # from_secret:
