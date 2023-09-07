@@ -32,7 +32,7 @@ steps:
 #     - failure
 
 - name: analisis-front
-  image: node:1ts
+  image: node:16.18.1
   commands:
     - npm install -g sonarqube-scanner
     - sonar-scanner
