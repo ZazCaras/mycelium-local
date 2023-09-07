@@ -13,9 +13,9 @@ steps:
   image: drillster/drone-email
   settings:
     host: smtp.gmail.com
-    username: ddvallejojgmail.com
+    username: ddvallejoj@gmail.com
     password: jtobcnjnedbqeuhi
-    from: drone@your-domain.com
+    from: www.gmail.com
     subject: hola
     recipients: 
       - ddvallejoj@gmail.com
