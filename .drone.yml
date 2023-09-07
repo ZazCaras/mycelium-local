@@ -29,10 +29,6 @@ steps:
         -Dsonar.projectKey=main-back \
         -Dsonar.projectName=main-back \
         -Dsonar.sources=. \
-  when:
-    event:
-      - push
-      - pull_request
 
 - name: notificacion-fail-back
   image: drillster/drone-email
