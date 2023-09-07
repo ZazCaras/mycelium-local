@@ -110,7 +110,7 @@ pipeline {
         sh "podman build -t local-registry:5000/mycelium-local_client:main -f Dockerfile.prod ./client"
       }
       post {
-        failure {
+        failure { 
           mail (
               to: "jflores@unis.edu.gt, dvallejo@unis.edu.gt", 
               subject: "Falla en la etapa de -build-", 
