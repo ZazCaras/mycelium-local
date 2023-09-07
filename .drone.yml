@@ -32,9 +32,9 @@ steps:
 #     - failure
 
 - name: analisis-front
-  image: sonarsource/sonar-scanner-cli:latest
+  image: node:1ts
   commands:
-    - cd client
+    - npm install -g sonarqube-scanner
     - sonar-scanner
 
 - name: notificacion-fail-front
