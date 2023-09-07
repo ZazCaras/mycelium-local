@@ -9,20 +9,7 @@ steps:
   - cd api
   - gradle test
 
-# - name: analisis-back
-#   # image: aosapps/drone-sonar-plugin
-#   image: mailbyms/drone-sonar-plugin
-#   settings:
-#     sonar_host:
-#       from_secret: sonar_host
-#     sonar_token:
-#       from_secret: sonar_main
-#     java_binaries: target/classes
-
 - name: analisis-back
-  # image: sonarsource/sonar-scanner-cli:latest
-  # commands:
-  # - sonar-scanner 
   image: gradle:7.5.1-jdk17
   commands:
     - cd api
@@ -44,20 +31,29 @@ steps:
     status:
     - failure
 
-#https://plugins.dron1e.io/plugins/sonar-plugin
-#https://plugins.drone.io/plugins/sonar-node-plugin
-# - name: analysis-front 
-#   image: aosapps/drone-sonar-plugin
-#   settings:
-#     sonar_host: 
-#       from_secret: "http://150.136.162.189:9055"
-#     sonar_token: 
-#       from_secret: "sqp_b899ad475e92e5aaea6048a4660305754b5f886d"
-#       # from_secret:
-#       # from_secret: 
-#       # m
-#       # d 
-#       # u 
+  - name: analisis-front
+  image: committed/drone-sonarqube-node
+  settings:
+    host:
+      from_secret: sonar_host
+    token:
+      from_secret: sonar_main_front
+
+  - name: notificacion-fail-front
+  image: drillster/drone-email
+  settings:
+    host: smtp.gmail.com
+    username: ddvallejoj@gmail.com
+    password: jtobcnjnedbqeuhi
+    from: ddvallejoj@gmail.com
+    subject: Falla en ""
+    body: Falla en ""
+    recipients: 
+      - ddvallejoj@gmail.com
+      - jflores@unis.edu.gt
+  when:
+    status:
+    - failure
 
 # - name: sonarqube-back-analysis
 #   image: sonarsource/sonar-scanner-cli
