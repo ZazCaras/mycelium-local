@@ -12,10 +12,10 @@ steps:
 - name: analisis-back
   image: aosapps/drone-sonar-plugin
   settings:
-      sonar_host:
-        from_secret: sonar_host
-      sonar_token:
-        from_secret: sonar_main
+    sonar_host:
+      from_secret: sonar_host
+    sonar_token:
+      from_secret: sonar_main
 
 - name: 
   image: drillster/drone-email
