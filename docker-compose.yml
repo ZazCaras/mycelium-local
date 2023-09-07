@@ -53,14 +53,28 @@ services:
   #   networks:
   #     - mycelium-local
 
+
   jenkins:
-    image: jenkins/jenkins:lts-jdk17 
+    image: 127.0.0.1:5000/jenkins/jenkins:lts-jdk17
+    build:
+      context: .
+      dockerfile: DockerfileJenkins
+    privileged: true
     ports:
-      - "7000:8080"  # Puerto 7000 para Jenkins
+      - 7000:8080
     volumes:
       - jenkins_data:/var/jenkins_home
     networks:
       - mycelium-local
+
+  # jenkins:
+  #   image: jenkins/jenkins:lts-jdk17 
+  #   ports:
+  #     - "7000:8080"  # Puerto 7000 para Jenkins
+  #   volumes:
+  #     - jenkins_data:/var/jenkins_home
+  #   networks:
+  #     - mycelium-local
 
   drone: 
     image: drone/drone:2
