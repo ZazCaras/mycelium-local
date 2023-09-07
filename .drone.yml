@@ -10,8 +10,10 @@ steps:
   - gradle test
 
 - name: analisis-back
-  # image: aosapps/drone-sonar-plugin 
+  # image: aosapps/drone-sonar-plugin
   image: mailbyms/drone-sonar-plugin
+  commands: 
+  - cd api
   settings:
     sonar_host:
       from_secret: sonar_host
