@@ -60,6 +60,21 @@ pipeline {
       } 
     }
 
+    stage("Build FRONT") {
+      steps {
+        sh "podman build -t local-registry:5000/mycelium-local_client:main -f Dockerfile.prod ./client"
+      }
+      post {
+        failure {
+          mail (
+              to: "jflores@unis.edu.gt, dvallejo@unis.edu.gt", 
+              subject: "Falla en la etapa de -build-", 
+              body: "No se ha podido completar el build del front-end."
+          )
+        }
+      }
+    }
+
     stage('SonarQube BACK Analysis') {
       steps {
           script {
@@ -89,6 +104,52 @@ pipeline {
         }
       }
     }
+
+    stage("Build BACK") {
+      steps {
+        sh "podman build -t local-registry:5000/mycelium-local_api:main -f Dockerfile.prod ./api"
+      }
+      post {
+        failure {
+          mail (
+              to: "jflores@unis.edu.gt, dvallejo@unis.edu.gt", 
+              subject: "Falla en la etapa de -build-", 
+              body: "No se ha podido completar el build del back-end."
+          )
+        }
+      }
+    }
+
+    stage("Podman push") {
+      steps {
+        script {
+          sh "podman push local-registry:5000/mycelium-local_api:main"
+          sh "podman push local-registry:5000/mycelium-local_client:main"
+        }
+      }
+      post {
+        failure {
+          mail (
+              to: "jflores@unis.edu.gt, dvallejo@unis.edu.gt", 
+              subject: "Falla en la etapa de -Podman push-", 
+              body: "No se han podido subir los cambios al docker Registry."
+          )
+        }
+      }
+    }
+
+    // stage("Deployment") {
+    //   steps {
+    //     sshPublisher(
+    //       failOnError: true, 
+    //       publishers: [
+    //         sshPublisherDesc(
+
+    //         )
+    //       ]
+    //     )
+    //   }
+    // }
 
   }
 }
