@@ -39,7 +39,7 @@ steps:
     token:
       from_secret: sonar_main_front
 
-  - name: notificacion-fail-front
+- name: notificacion-fail-front
   image: drillster/drone-email
   settings:
     host: smtp.gmail.com
