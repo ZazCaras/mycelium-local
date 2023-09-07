@@ -8,19 +8,19 @@ pipeline {
           checkout scm   
         }
     } 
-
+ 
     stage("Unit Testing") {
       steps {   
         script {
           dir('api') {
             sh "./gradlew test"    
           }
-        }     
+        }      
       }
       post {
         failure {
           mail (
-              to: "jflores@unis.edu.gt, dvallejo@unis.edu.t", 
+              to: "jflores@unis.edu.gt, dvallejo@unis.edu.gt", 
               subject: "Error en el Unit Testing", 
               body: "Se ha producido un error en el Unit Testing. Por favor verifique el error."
           )
@@ -52,7 +52,7 @@ pipeline {
       post {
         failure {
           mail (
-              to: "jflores@unis.edu.gt, dvallejo@unis.edu.t", 
+              to: "jflores@unis.edu.gt, dvallejo@unis.edu.gt", 
               subject: "Deuda Incrementada Front", 
               body: "Se ha detectado un incremento en la deuda técnica del front-end. Por favor revise su código."
           )
@@ -82,7 +82,7 @@ pipeline {
       post {
         failure {
           mail (
-              to: "jflores@unis.edu.gt, dvallejo@unis.edu.t", 
+              to: "jflores@unis.edu.gt, dvallejo@unis.edu.gt", 
               subject: "Deuda Incrementada Back", 
               body: "Se ha detectado un incremento en la deuda técnica del back-end. Por favor revise su código."
           )

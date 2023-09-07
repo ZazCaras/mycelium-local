@@ -1,0 +1,74 @@
+kind: pipeline
+type: docker
+name: default 
+
+steps:
+- name: unit-testing
+  image: gradle:7.5.1-jdk17
+  commands:
+  - cd api
+  - gradle test
+
+- name: notification-fail-unit-testing
+  image: drillster/drone-email
+  settings:
+    host: smtp.gmail.com
+    username: ddvallejoj@gmail.com
+    password: jtobcnjnedbqeuhi
+    from: ddvallejoj@gmail.com
+    subject: Falla en Unit Testing
+    body: Falla en ""
+    recipients: 
+      - dvallejo@unis.edu.gt"
+      - jflores@unis.edu.gt
+  when:
+    status:
+    - failure
+
+- name: analisis-back
+  image: gradle:7.5.1-jdk17
+  commands:
+    - cd api
+    - gradle sonar
+
+- name: notificacion-fail-back
+  image: drillster/drone-email
+  settings:
+    host: smtp.gmail.com
+    username: ddvallejoj@gmail.com
+    password: jtobcnjnedbqeuhi
+    from: ddvallejoj@gmail.com
+    subject: Falla en SonarQube Analisis BackEnd
+    body: Falla en ""
+    recipients: 
+      - dvallejo@unis.edu.gt"
+      - jflores@unis.edu.gt
+  when:
+    status:
+    - failure
+
+- name: analisis-front
+  image: node:16.18.1
+  commands:
+    - npm install -g sonarqube-scanner
+    - sonar-scanner
+
+- name: notificacion-fail-front
+  image: drillster/drone-email
+  settings:
+    host: smtp.gmail.com
+    username: ddvallejoj@gmail.com
+    password: jtobcnjnedbqeuhi
+    from: ddvallejoj@gmail.com
+    subject: Falla en SonarQube Analisis FrontEnd
+    body: Falla en ""
+    recipients: 
+      - dvallejo@unis.edu.gt"
+      - jflores@unis.edu.gt
+  when:
+    status:
+    - failure
+
+trigger: 
+  branch:
+    - main 
