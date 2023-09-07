@@ -20,7 +20,7 @@ steps:
 #     java_binaries: target/classes
 
 - name: analisis-back
- image: sonarsource/sonar-scanner-cli:latest
+  image: sonarsource/sonar-scanner-cli:latest
   commands:
     - cd api
     - sonar-scanner \
