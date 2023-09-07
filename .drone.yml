@@ -13,9 +13,9 @@ steps:
   image: aosapps/drone-sonar-plugin
   settings:
       sonar_host:
-        from_secret: http://150.136.162.189:9055
+        from_secret: sonar_host
       sonar_token:
-        from_secret: squ_acd5b2fa8e2cd64412b8c982f37800095fa6b223
+        from_secret: sonar_main
 
 - name: 
   image: drillster/drone-email
