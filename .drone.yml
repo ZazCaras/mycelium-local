@@ -32,12 +32,13 @@ steps:
 #     - failure
 
 - name: analisis-front
-  image: committed/drone-sonarqube-node
+  image: kytay/sonar-node-plugin
   settings:
-    host:
+    sonar_host:
       from_secret: sonar_host
-    token:
+    sonar_token:
       from_secret: sonar_main_front
+    use_node_version: 16.18.1
 
 - name: notificacion-fail-front
   image: drillster/drone-email
