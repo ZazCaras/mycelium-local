@@ -38,6 +38,8 @@ steps:
       from_secret: sonar_host
     sonar_token:
       from_secret: sonar_main_front
+    sonar_login:
+      from_secret: sonar_user_token
     use_node_version: 16.18.1
 
 - name: notificacion-fail-front
