@@ -46,7 +46,7 @@ sonar {
     property("sonar.projectKey", "main-back")
     property("sonar.host.url", "http://150.136.162.189:9055")
     property("sonar.login", "sqp_b899ad475e92e5aaea6048a4660305754b5f886d")
-  }
+  } 
 }
 
 java {
