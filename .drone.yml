@@ -52,20 +52,7 @@ steps:
   when:
     status:
     - failure
-
-# - name: sonarqube-back-analysis
-#   image: sonarsource/sonar-scanner-cli
-#   environment:
-#     SONAR_HOST_URL: http://sonarqube:9000
-#   commands:
-#   - cd api
-#   - ./gradlew sonar
-
-# - name: quality-gate-back
-#   image: alpine
-#   commands:
-#   - timeout 1h drone wait
-
+    
 trigger: 
   branch:
     - main 
