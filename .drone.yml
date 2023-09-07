@@ -15,7 +15,7 @@ steps:
     host: smtp.gmail.com
     username: ddvallejoj@gmail.com
     password: jtobcnjnedbqeuhi
-    from: www.gmail.com
+    from: ddvallejoj@gmail.com
     subject: hola
     recipients: 
       - ddvallejoj@gmail.com
