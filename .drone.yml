@@ -22,13 +22,7 @@ steps:
 - name: analisis-back
   image: sonarsource/sonar-scanner-cli:latest
   commands:
-    - cd api
-    - sonar-scanner \
-        -Dsonar.host.url=http://150.136.162.189:9055 \
-        -Dsonar.login=sqp_b899ad475e92e5aaea6048a4660305754b5f886d \
-        -Dsonar.projectKey=main-back \
-        -Dsonar.projectName=main-back \
-        -Dsonar.sources=. \
+  - sonar-scanner
 
 - name: notificacion-fail-back
   image: drillster/drone-email
