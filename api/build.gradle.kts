@@ -40,6 +40,7 @@ dependencies {
 
 application { mainClass.set("com.mycelium.local.Application") }
 
+//main
 sonar {
   properties {
     property("sonar.projectName", "main-back")
@@ -48,6 +49,26 @@ sonar {
     property("sonar.login", "sqp_b899ad475e92e5aaea6048a4660305754b5f886d")
   } 
 }
+
+// //dev
+// sonar {
+//     properties {
+//       property("sonar.projectName", "dev-back")
+//       property("sonar.projectKey", "dev-back")
+//       property("sonar.host.url", "http://150.136.162.189:9055")
+//       property("sonar.login", "sqp_b59f77f5803e3cf850d1e47dbbbdb6f461da784c")
+//     } 
+//   }
+
+// //uat
+// sonar {
+//     properties {
+//       property("sonar.projectName", "uat-back")
+//       property("sonar.projectKey", "uat-back")
+//       property("sonar.host.url", "http://150.136.162.189:9055")
+//       property("sonar.login", "sqp_f517e0d02bee35bf17583fdcf027cbb3865f7fff")
+//     } 
+//   }
 
 java {
     sourceCompatibility = JavaVersion.toVersion("17")
