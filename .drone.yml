@@ -3,33 +3,33 @@ type: docker
 name: default 
 
 steps:
-# - name: unit-testing
-#   image: gradle:7.5.1-jdk17
-#   commands:
-#   - cd api
-#   - gradle test
+- name: unit-testing
+  image: gradle:7.5.1-jdk17
+  commands:
+  - cd api
+  - gradle test
 
-# - name: analisis-back
-#   image: gradle:7.5.1-jdk17
-#   commands:
-#     - cd api
-#     - gradle sonar
+- name: analisis-back
+  image: gradle:7.5.1-jdk17
+  commands:
+    - cd api
+    - gradle sonar
 
-# - name: notificacion-fail-back
-#   image: drillster/drone-email
-#   settings:
-#     host: smtp.gmail.com
-#     username: ddvallejoj@gmail.com
-#     password: jtobcnjnedbqeuhi
-#     from: ddvallejoj@gmail.com
-#     subject: Falla en ""
-#     body: Falla en ""
-#     recipients: 
-#       - ddvallejoj@gmail.com
-#       - jflores@unis.edu.gt
-#   when:
-#     status:
-#     - failure
+- name: notificacion-fail-back
+  image: drillster/drone-email
+  settings:
+    host: smtp.gmail.com
+    username: ddvallejoj@gmail.com
+    password: jtobcnjnedbqeuhi
+    from: ddvallejoj@gmail.com
+    subject: Falla en ""
+    body: Falla en ""
+    recipients: 
+      - ddvallejoj@gmail.com
+      - jflores@unis.edu.gt
+  when:
+    status:
+    - failure
 
 - name: analisis-front
   image: node:16.18.1
