@@ -9,17 +9,30 @@ steps:
   - cd api
   - gradle test
 
+# - name: analisis-back
+#   # image: aosapps/drone-sonar-plugin
+#   image: mailbyms/drone-sonar-plugin
+#   settings:
+#     sonar_host:
+#       from_secret: sonar_host
+#     sonar_token:
+#       from_secret: sonar_main
+#     java_binaries: target/classes
+
 - name: analisis-back
-  # image: aosapps/drone-sonar-plugin
-  image: mailbyms/drone-sonar-plugin
-  settings:
-    sonar_host:
-      from_secret: sonar_host
-    sonar_token:
-      from_secret: sonar_main
-    java_binaries: target/classes
-  commands: 
-  - cd api
+ image: sonarsource/sonar-scanner-cli:latest
+  commands:
+    - cd api
+    - sonar-scanner \
+        -Dsonar.host.url=http://150.136.162.189:9055 \
+        -Dsonar.login=sqp_b899ad475e92e5aaea6048a4660305754b5f886d \
+        -Dsonar.projectKey=main-back \
+        -Dsonar.projectName=main-back \
+        -Dsonar.sources=. \
+  when:
+    event:
+      - push
+      - pull_request
 
 - name: notificacion-fail-back
   image: drillster/drone-email
