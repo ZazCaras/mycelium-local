@@ -9,15 +9,15 @@ steps:
   - cd api
   - gradle test
 
-# - name: analisis-back
-#   image: aosapps/drone-sonar-plugin
-#   settings:
-#     sonar_host:
-#       from_secret: sonar_host
-#     sonar_token:
-#       from_secret: sonar_main
+- name: analisis-back
+  image: aosapps/drone-sonar-plugin
+  settings:
+    sonar_host:
+      from_secret: sonar_host
+    sonar_token:
+      from_secret: sonar_main
 
-- name: 
+- name: notificacion-fail-back
   image: drillster/drone-email
   settings:
     host: smtp.gmail.com
