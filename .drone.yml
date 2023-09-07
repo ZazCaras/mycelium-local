@@ -9,20 +9,31 @@ steps:
   - cd api
   - gradle test
 
+- name: notify
+  image: drillster/drone-email
+  settings:
+    host: smtp.gmail.com
+    username: ddvallejojgmail.com
+    password: jtobcnjnedbqeuhi
+    from: drone@your-domain.com
+    subject: hola
+    recipients: 
+      - ddvallejoj@gmail.com
+
 #https://plugins.dron1e.io/plugins/sonar-plugin
 #https://plugins.drone.io/plugins/sonar-node-plugin
-- name: analysis-front 
-  image: aosapps/drone-sonar-plugin
-  settings:
-    sonar_host: 
-      from_secret: "http://150.136.162.189:9055"
-    sonar_token: 
-      from_secret: "sqp_b899ad475e92e5aaea6048a4660305754b5f886d"
-      # from_secret:
-      # from_secret: 
-      # m
-      # d 
-      # u 
+# - name: analysis-front 
+#   image: aosapps/drone-sonar-plugin
+#   settings:
+#     sonar_host: 
+#       from_secret: "http://150.136.162.189:9055"
+#     sonar_token: 
+#       from_secret: "sqp_b899ad475e92e5aaea6048a4660305754b5f886d"
+#       # from_secret:
+#       # from_secret: 
+#       # m
+#       # d 
+#       # u 
 
 # - name: sonarqube-back-analysis
 #   image: sonarsource/sonar-scanner-cli
