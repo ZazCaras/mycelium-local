@@ -14,12 +14,12 @@ steps:
   image: mailbyms/drone-sonar-plugin
   commands: 
   - cd api
-  settings:
-    sonar_host:
-      from_secret: sonar_host
-    sonar_token:
-      from_secret: sonar_main
-    java_binaries: target/classes
+    settings:
+      sonar_host:
+        from_secret: sonar_host
+      sonar_token:
+        from_secret: sonar_main
+      java_binaries: target/classes
 
 - name: notificacion-fail-back
   image: drillster/drone-email
