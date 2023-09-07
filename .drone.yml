@@ -9,16 +9,29 @@ steps:
   - cd api
   - gradle test
 
-- name: notify
+- name: analisis-back
+  image: aosapps/drone-sonar-plugin
+  settings:
+      sonar_host:
+        from_secret: http://150.136.162.189:9055
+      sonar_token:
+        from_secret: squ_acd5b2fa8e2cd64412b8c982f37800095fa6b223
+
+- name: 
   image: drillster/drone-email
   settings:
     host: smtp.gmail.com
     username: ddvallejoj@gmail.com
     password: jtobcnjnedbqeuhi
     from: ddvallejoj@gmail.com
-    subject: hola
+    subject: Falla en ""
+    body: Falla en ""
     recipients: 
       - ddvallejoj@gmail.com
+      - jflores@unis.edu.gt
+  when:
+    status:
+    - failure
 
 #https://plugins.dron1e.io/plugins/sonar-plugin
 #https://plugins.drone.io/plugins/sonar-node-plugin
