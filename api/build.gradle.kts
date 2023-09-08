@@ -40,7 +40,7 @@ dependencies {
 
 application { mainClass.set("com.mycelium.local.Application") }
 
-//main
+//main 
 sonar {
   properties {
     property("sonar.projectName", "main-back")
