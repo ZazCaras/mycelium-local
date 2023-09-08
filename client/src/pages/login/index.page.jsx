@@ -48,7 +48,8 @@ export function Page() {
             alt={texts.global.shopname}
           />
           <Typography variant="h4" mt={2}>
-            {texts.global.shopname}
+              2023-MagicPROD
+            {/* {texts.global.shopname} */}
           </Typography>
           <form className="mt-8 mb-11" onSubmit={handleSubmit}>
             <TextField
