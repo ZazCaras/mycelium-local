@@ -60,7 +60,7 @@ pipeline {
 
     stage("Build BACK") {
       steps {
-        sh "podman build -t local-registry:5000/mycelium-local_api:main -f Dockerfile.prod ./api"
+        sh "podman build -t local-registry:5000/mycelium-local_api:uat -f Dockerfile.prod ./api"
       }
       post {
         failure {
@@ -107,7 +107,7 @@ pipeline {
 
     stage("Build FRONT") {
       steps {
-        sh "podman build -t local-registry:5000/mycelium-local_client:main -f Dockerfile.prod ./client"
+        sh "podman build -t local-registry:5000/mycelium-local_client:uat -f Dockerfile.prod ./client"
       }
       post {
         failure { 
@@ -123,8 +123,8 @@ pipeline {
     stage("Podman push") {
       steps {
         script {
-          sh "podman push local-registry:5000/mycelium-local_api:main"
-          sh "podman push local-registry:5000/mycelium-local_client:main"
+          sh "podman push local-registry:5000/mycelium-local_api:uat"
+          sh "podman push local-registry:5000/mycelium-local_client:uat"
         }
       }
       post {
