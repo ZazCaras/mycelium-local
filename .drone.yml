@@ -14,7 +14,9 @@ steps:
   settings:
     host: smtp.gmail.com
     username: ddvallejoj@gmail.com
-    password: jtobcnjnedbqeuhi
+    password: 
+      from_secret:
+        gmail_secret
     from: ddvallejoj@gmail.com
     subject: Falla en Unit Testing
     body: Falla en ""
@@ -36,7 +38,9 @@ steps:
   settings:
     host: smtp.gmail.com
     username: ddvallejoj@gmail.com
-    password: jtobcnjnedbqeuhi
+    password: 
+      from_secret:
+        gmail_secret
     from: ddvallejoj@gmail.com
     subject: Falla en SonarQube Analisis BackEnd
     body: Falla en ""
@@ -58,7 +62,9 @@ steps:
   settings:
     host: smtp.gmail.com
     username: ddvallejoj@gmail.com
-    password: jtobcnjnedbqeuhi
+    password: 
+      from_secret:
+        gmail_secret
     from: ddvallejoj@gmail.com
     subject: Falla en SonarQube Analisis FrontEnd
     body: Falla en ""
