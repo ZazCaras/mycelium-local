@@ -1,0 +1,70 @@
+From 601b48fa8d396d99769d49e73bb696fd9122821e Mon Sep 17 00:00:00 2001
+From: jrberganza <68700999+jrberganza@users.noreply.github.com>
+Date: Sun, 3 Sep 2023 16:42:21 -0600
+Subject: [PATCH] Prepare for deployment
+
+---
+ api/Dockerfile.prod                    | 2 +-
+ api/src/main/resources/application.yml | 2 +-
+ client/.dockerignore                   | 5 +++--
+ client/Dockerfile.prod                 | 6 +++---
+ 4 files changed, 8 insertions(+), 7 deletions(-)
+
+diff --git a/api/Dockerfile.prod b/api/Dockerfile.prod
+index 4c1a679..8e15b87 100644
+--- a/api/Dockerfile.prod
++++ b/api/Dockerfile.prod
+@@ -1,4 +1,4 @@
+-FROM docker.io/gradle:jdk17 AS builder
++FROM docker.io/gradle:7.5.1-jdk17 AS builder
+ 
+ WORKDIR /app
+ 
+diff --git a/api/src/main/resources/application.yml b/api/src/main/resources/application.yml
+index 8c73e4a..3221ef3 100644
+--- a/api/src/main/resources/application.yml
++++ b/api/src/main/resources/application.yml
+@@ -32,7 +32,7 @@ jackson:
+ datasources:
+   default:
+     driverClassName: oracle.jdbc.OracleDriver
+-    url: "jdbc:oracle:thin:@myceliumdb:1521/XEPDB1"
++    url: ${DATABASE_JDBC_URL:jdbc:oracle:thin:@myceliumdb:1521/XEPDB1}
+     username: ${DATABASE_NAME:PDBADMIN}
+     password: "12345"
+     dbType: oracle
+diff --git a/client/.dockerignore b/client/.dockerignore
+index 5171c54..1d89cb4 100644
+--- a/client/.dockerignore
++++ b/client/.dockerignore
+@@ -1,2 +1,3 @@
+-node_modules
+-npm-debug.log
+\ No newline at end of file
++**/node_modules
++**/npm-debug.log
++**/.scannerwork
+\ No newline at end of file
+diff --git a/client/Dockerfile.prod b/client/Dockerfile.prod
+index 14b0d92..17a3aa5 100644
+--- a/client/Dockerfile.prod
++++ b/client/Dockerfile.prod
+@@ -21,11 +21,11 @@ RUN yarn run build
+ ## App Stage
+ FROM docker.io/node:16 AS mycelium-international-client
+ 
+-USER node
+-
+ WORKDIR /app
+ 
+ # Copy build
+-COPY --from=build-base /app/ .
++COPY --from=build-base --chown=node:node /app/ .
++
++USER node
+ 
+ CMD [ "yarn", "run", "server" ]
+\ No newline at end of file
+-- 
+2.41.0
+
