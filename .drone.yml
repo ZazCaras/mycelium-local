@@ -71,4 +71,4 @@ steps:
 
 trigger: 
   branch:
-    - dev 
+    - uat
