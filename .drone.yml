@@ -19,7 +19,7 @@ steps:
         gmail_secret
     from: ddvallejoj@gmail.com
     subject: Falla en Unit Testing
-    body: Falla en ""
+    body: Se ha detectado una falla en la etapa de -unit-testing-
     recipients: 
       - dvallejo@unis.edu.gt"
       - jflores@unis.edu.gt
@@ -43,7 +43,7 @@ steps:
         gmail_secret
     from: ddvallejoj@gmail.com
     subject: Falla en SonarQube Analisis BackEnd
-    body: Falla en ""
+    body: Se ha detectado una falla en la etapa de -analisis-back-
     recipients: 
       - dvallejo@unis.edu.gt"
       - jflores@unis.edu.gt
@@ -67,7 +67,7 @@ steps:
         gmail_secret
     from: ddvallejoj@gmail.com
     subject: Falla en SonarQube Analisis FrontEnd
-    body: Falla en ""
+    body: Se ha detectado una falla en la etapa de -analisis-front-
     recipients: 
       - dvallejo@unis.edu.gt"
       - jflores@unis.edu.gt
