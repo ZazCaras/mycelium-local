@@ -21,7 +21,7 @@ steps:
     subject: Falla en Unit Testing
     body: Se ha detectado una falla en la etapa de -unit-testing-
     recipients: 
-      - dvallejo@unis.edu.gt"
+      - dvallejo@unis.edu.gt
       - jflores@unis.edu.gt
   when:
     status:
@@ -45,7 +45,7 @@ steps:
     subject: Falla en SonarQube Analisis BackEnd
     body: Se ha detectado una falla en la etapa de -analisis-back-
     recipients: 
-      - dvallejo@unis.edu.gt"
+      - dvallejo@unis.edu.gt
       - jflores@unis.edu.gt
   when:
     status:
@@ -69,7 +69,7 @@ steps:
     subject: Se ha detectado una falla en la etapa de -analisis-front-
     body: Se ha detectado una falla en la etapa de -analisis-front-
     recipients: 
-      - dvallejo@unis.edu.gt"
+      - dvallejo@unis.edu.gt
       - jflores@unis.edu.gt
   when:
     status:
