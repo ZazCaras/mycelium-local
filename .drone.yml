@@ -7,7 +7,7 @@ steps:
   image: gradle:7.5.1-jdk17
   commands:
   - cd api
-  - gradle test
+  - gradle testasdfasdfa3
 
 - name: notification-fail-unit-testing
   image: drillster/drone-email
@@ -19,9 +19,9 @@ steps:
         gmail_secret
     from: ddvallejoj@gmail.com
     subject: Falla en Unit Testing
-    body: Falla en ""
+    body: Falla a proposito
     recipients: 
-      - dvallejo@unis.edu.gt"
+      - dvallejo@unis.edu.gt
       - jflores@unis.edu.gt
   when:
     status:
@@ -31,7 +31,7 @@ steps:
   image: gradle:7.5.1-jdk17
   commands:
     - cd api
-    - gradle sonarjasldñfsfas
+    - gradle sonar
 
 - name: notificacion-fail-back
   image: drillster/drone-email
@@ -45,7 +45,7 @@ steps:
     subject: Falla en SonarQube Analisis BackEnd
     body: Falla a proposito
     recipients: 
-      - dvallejo@unis.edu.gt"
+      - dvallejo@unis.edu.gt
       - jflores@unis.edu.gt
   when:
     status:
@@ -69,7 +69,7 @@ steps:
     subject: Falla en SonarQube Analisis FrontEnd
     body: Falla en ""
     recipients: 
-      - dvallejo@unis.edu.gt"
+      - dvallejo@unis.edu.gt
       - jflores@unis.edu.gt
   when:
     status:
