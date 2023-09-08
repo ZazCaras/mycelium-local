@@ -75,6 +75,9 @@ steps:
     status:
     - failure
 
-trigger: 
+trigger:   
   branch:
-    - main
+  - main 
+  event:
+  - push
+  - pull_request
