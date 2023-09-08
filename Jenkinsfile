@@ -128,7 +128,7 @@ pipeline {
         }
       }
       post {
-        failure {
+        failure { 
           mail (
               to: "jflores@unis.edu.gt, dvallejo@unis.edu.gt", 
               subject: "Falla en la etapa de -Podman push-", 

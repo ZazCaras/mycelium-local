@@ -7,7 +7,7 @@ steps:
   image: gradle:7.5.1-jdk17
   commands:
   - cd api
-  - gradle testasdfasdfa3
+  - gradle test
 
 - name: notification-fail-unit-testing
   image: drillster/drone-email
