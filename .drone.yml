@@ -21,7 +21,7 @@ steps:
     subject: Falla en Unit Testing
     body: Se ha detectado una falla en la etapa de -unit-testing-
     recipients: 
-      - dvallejo@unis.edu.gt"
+      - dvallejo@unis.edu.gt
       - jflores@unis.edu.gt
   when:
     status:
@@ -31,7 +31,7 @@ steps:
   image: gradle:7.5.1-jdk17
   commands:
     - cd api
-    - gradle sonar
+    - gradle sonar -Dsonar.qualitygate.wait=true
 
 - name: notificacion-fail-back
   image: drillster/drone-email
@@ -45,7 +45,7 @@ steps:
     subject: Falla en SonarQube Analisis BackEnd
     body: Se ha detectado una falla en la etapa de -analisis-back-
     recipients: 
-      - dvallejo@unis.edu.gt"
+      - dvallejo@unis.edu.gt
       - jflores@unis.edu.gt
   when:
     status:
@@ -55,7 +55,7 @@ steps:
   image: node:16.18.1
   commands:
     - npm install -g sonarqube-scanner
-    - sonar-scanner
+    - sonar-scanner -Dsonar.qualitygate.wait=true
 
 - name: notificacion-fail-front
   image: drillster/drone-email
@@ -69,7 +69,7 @@ steps:
     subject: Se ha detectado una falla en la etapa de -analisis-front-
     body: Falla en ""
     recipients: 
-      - dvallejo@unis.edu.gt"
+      - dvallejo@unis.edu.gt
       - jflores@unis.edu.gt
   when:
     status:
