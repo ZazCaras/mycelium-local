@@ -20,7 +20,7 @@ steps:
     from: ddvallejoj@gmail.com
     subject: Falla en Unit Testing
     body: Se ha detectado una falla en la etapa de -unit-testing-
-    recipients: 
+    recipients:  
       - dvallejo@unis.edu.gt
       - jflores@unis.edu.gt
   when:
