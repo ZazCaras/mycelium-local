@@ -144,7 +144,7 @@ pipeline {
             failOnError: true, 
             publishers: [
               sshPublisherDesc(
-                configName: devpc,
+                configName: "devpc",
                 transfers: [
                   sshTransfer (
                     execCommand: 'docker compose pull && docker compose up -d',
