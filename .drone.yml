@@ -77,7 +77,7 @@ steps:
 
 trigger:   
   branch:
-  - dev 
+  - main 
   event:
   - push
   - pull_request
