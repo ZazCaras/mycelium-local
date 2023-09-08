@@ -67,7 +67,7 @@ steps:
         gmail_secret
     from: ddvallejoj@gmail.com
     subject: Se ha detectado una falla en la etapa de -analisis-front-
-    body: Falla en ""
+    body: Se ha detectado una falla en la etapa de -analisis-front-
     recipients: 
       - dvallejo@unis.edu.gt"
       - jflores@unis.edu.gt
