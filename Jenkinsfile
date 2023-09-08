@@ -145,7 +145,7 @@ pipeline {
             publishers: [
               sshPublisherDesc(
                 //configName: "mainpc",
-                configName: devpc,
+                configName: devpc, 
                 //configName: uatpc,
                 transfers: [
                   sshTransfer (
