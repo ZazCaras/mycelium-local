@@ -138,18 +138,26 @@ pipeline {
       }
     } 
  
-    // stage("Deployment") {
-    //   steps {
-    //     sshPublisher(
-    //       failOnError: true, 
-    //       publishers: [
-    //         sshPublisherDesc(
-
-    //         )
-    //       ]
-    //     )
-    //   }
-    // }
+      stage("Deploy") {
+        steps {
+          sshPublisher(
+            failOnError: true, 
+            publishers: [
+              sshPublisherDesc(
+                configName: "mainpc",
+                //configName: devpc,
+                //configName: uatpc,
+                transfers: [
+                  sshTransfer (
+                    execCommand: 'docker compose pull && docker compose up -d',
+                    execTimeout: 300000
+                  )
+                ]
+              )
+            ]
+          )
+        }
+      }
 
   }
 }

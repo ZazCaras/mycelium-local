@@ -85,9 +85,9 @@ services:
       - "7001:80"
     volumes:
       - /var/lib/drone:/data
+    env_file:
+      - .env
     environment:
-      - DRONE_GITHUB_CLIENT_ID=c85a7d32364613774834
-      - DRONE_GITHUB_CLIENT_SECRET=b4b7aaa41cee5a20d41bfe228907df5dee2f5185 
       - DRONE_RPC_SECRET=98603fac90abd2dd2fb4de2c6997e573
       - DRONE_SERVER_HOST=150.136.162.189:9051
       - DRONE_SERVER_PROTO=http
