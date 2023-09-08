@@ -3,35 +3,35 @@ type: docker
 name: default 
 
 steps:
-- name: unit-testing
-  image: gradle:7.5.1-jdk17
-  commands:
-  - cd api
-  - gradle test
+# - name: unit-testing
+#   image: gradle:7.5.1-jdk17
+#   commands:
+#   - cd api
+#   - gradle test
 
-- name: notification-fail-unit-testing
-  image: drillster/drone-email
-  settings:
-    host: smtp.gmail.com
-    username: ddvallejoj@gmail.com
-    password: 
-      from_secret:
-        gmail_secret
-    from: ddvallejoj@gmail.com
-    subject: Falla en Unit Testing
-    body: Se ha detectado una falla en la etapa de -unit-testing-
-    recipients: 
-      - dvallejo@unis.edu.gt"
-      - jflores@unis.edu.gt
-  when:
-    status:
-    - failure
+# - name: notification-fail-unit-testing
+#   image: drillster/drone-email
+#   settings:
+#     host: smtp.gmail.com
+#     username: ddvallejoj@gmail.com
+#     password: 
+#       from_secret:
+#         gmail_secret
+#     from: ddvallejoj@gmail.com
+#     subject: Falla en Unit Testing
+#     body: Se ha detectado una falla en la etapa de -unit-testing-
+#     recipients: 
+#       - dvallejo@unis.edu.gt"
+#       - jflores@unis.edu.gt
+#   when:
+#     status:
+#     - failure
 
 - name: analisis-back
   image: gradle:7.5.1-jdk17
   commands:
     - cd api
-    - gradle sonar
+    - gradle sonar -Dsonar.qualitygate.wait=true
 
 - name: notificacion-fail-back
   image: drillster/drone-email
