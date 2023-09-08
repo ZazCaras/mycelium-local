@@ -48,7 +48,7 @@ export function Page() {
             alt={texts.global.shopname}
           />
           <Typography variant="h4" mt={2}>
-            2023-MagicDev
+            2023-MagicDev   
             {/* {texts.global.shopname} */}
           </Typography>
           <form className="mt-8 mb-11" onSubmit={handleSubmit}>
