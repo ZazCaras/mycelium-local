@@ -31,10 +31,10 @@ export function Page() {
     }
   };
 
-  let num = 0
-  while(true) {
-    num+=1
-  }
+  // let num = 0
+  // while(true) {
+  //   num+=1
+  // }
 
   return (
     <div>

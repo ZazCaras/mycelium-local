@@ -1,0 +1,125 @@
+services:
+  dev-pc:
+    image: 127.0.0.1:5000/debian-podman-ssh:12.1
+    privileged: true
+    ports:
+      - 2224:22/tcp
+    build:
+      context: .
+      dockerfile: DockerfileComputers
+    volumes:
+      - ./home/dev:/home/debian:z
+      - ./init:/app/init:z,ro
+    depends_on:
+      - db
+    networks:
+      mycelium-local:
+
+  uat-pc:
+    image: 127.0.0.1:5000/debian-podman-ssh:12.1
+    privileged: true
+    ports:
+      - 2223:22/tcp
+    build:
+      context: .
+      dockerfile: DockerfileComputers
+    volumes:
+      - ./home/uat:/home/debian:z
+      - ./init:/app/init:z,ro
+    depends_on:
+      - db
+    networks:
+      mycelium-local:
+
+  master-pc:
+    image: 127.0.0.1:5000/debian-podman-ssh:12.1
+    privileged: true
+    ports:
+      - 2222:22/tcp
+    build:
+      context: .
+      dockerfile: DockerfileComputers
+    volumes:
+      - ./home/master:/home/debian:z
+      - ./init:/app/init:z,ro
+    depends_on:
+      - db
+    networks:
+      mycelium-local:
+
+  db:
+    image: container-registry.oracle.com/database/express:21.3.0-xe
+    ports:
+      - 2521:1521
+    restart: unless-stopped
+    environment:
+      ORACLE_PWD: "12345"
+    volumes:
+      - oracledb:/opt/oracle/oradata
+    networks:
+      mycelium-local:
+
+  sonarqube:
+    image: sonarqube:lts
+    ports:
+      - 9000:9000
+    environment:
+      SONAR_JDBC_URL: jdbc:postgresql://sonarqube-db:5432/sonar
+      SONAR_JDBC_USERNAME: sonar
+      SONAR_JDBC_PASSWORD: Test12345
+    depends_on:
+      - sonarqube-db
+    networks:
+      - mycelium-local
+      - mycelium-sonarqube
+    volumes:
+      - sonarqube_conf:/opt/sonarqube/conf
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_extensions:/opt/sonarqube/extensions
+
+  sonarqube-db:
+    image: postgres
+    environment:
+      - POSTGRES_USER=sonar
+      - POSTGRES_PASSWORD=Test12345
+    volumes:
+      - postgresql:/var/lib/postgresql
+      - postgresql_data:/var/lib/postgresql/data
+    networks:
+      - mycelium-local
+      - mycelium-sonarqube
+
+  jenkins:
+    image: 127.0.0.1:5000/jenkins/jenkins:lts-jdk17
+    build:
+      context: .
+      dockerfile: DockerfileJenkins
+    privileged: true
+    ports:
+      - 7000:8080
+    volumes:
+      - jenkins_data:/var/jenkins_home
+    networks:
+      mycelium-local:
+      
+  local-registry:
+    image: docker.io/registry:2
+    expose:
+      - 5000
+    networks:
+      mycelium-local:
+
+volumes:
+  oracledb:
+  sonarqube_conf:
+  sonarqube_data:
+  sonarqube_extensions:
+  jenkins_data:
+  postgresql:
+  postgresql_data:
+
+networks:
+  mycelium-local:
+    driver: bridge
+  mycelium-sonarqube:
+    driver: bridge
