@@ -14,7 +14,9 @@ steps:
   settings:
     host: smtp.gmail.com
     username: ddvallejoj@gmail.com
-    password: jtobcnjnedbqeuhi
+    password: 
+      from_secret:
+        gmail_secret
     from: ddvallejoj@gmail.com
     subject: Falla en Unit Testing
     body: Falla en ""
@@ -29,14 +31,16 @@ steps:
   image: gradle:7.5.1-jdk17
   commands:
     - cd api
-    - gradle sonar
+    - gradle sonarjasldñfsfas
 
 - name: notificacion-fail-back
   image: drillster/drone-email
   settings:
     host: smtp.gmail.com
     username: ddvallejoj@gmail.com
-    password: jtobcnjnedbqeuhi
+    password: 
+      from_secret:
+        gmail_secret
     from: ddvallejoj@gmail.com
     subject: Falla en SonarQube Analisis BackEnd
     body: Falla en ""
@@ -58,7 +62,9 @@ steps:
   settings:
     host: smtp.gmail.com
     username: ddvallejoj@gmail.com
-    password: jtobcnjnedbqeuhi
+    password: 
+      from_secret:
+        gmail_secret
     from: ddvallejoj@gmail.com
     subject: Falla en SonarQube Analisis FrontEnd
     body: Falla en ""
