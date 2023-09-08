@@ -43,7 +43,7 @@ steps:
         gmail_secret
     from: ddvallejoj@gmail.com
     subject: Falla en SonarQube Analisis BackEnd
-    body: Falla en ""
+    body: Falla a proposito
     recipients: 
       - dvallejo@unis.edu.gt"
       - jflores@unis.edu.gt
