@@ -69,8 +69,9 @@ steps:
     status:
     - failure
 
-trigger: 
-  event: 
-    - pull_request
+trigger:   
   branch:
-    - uat
+  - uat 
+  event:
+  - push
+  - pull_request
