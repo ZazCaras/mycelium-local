@@ -25,7 +25,7 @@ pipeline {
               body: "Se ha producido un error en el Unit Testing. Por favor verifique el error."
           )
         }
-      }
+      } 
     }
 
     stage('SonarQube BACK Analysis') {
