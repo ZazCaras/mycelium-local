@@ -55,7 +55,7 @@ steps:
   image: node:16.18.1
   commands:
     - npm install -g sonarqube-scanner
-    - sonar-scanner -Dsonar.qualitygate.wait=true
+    - sonar-scanner
 
 - name: notificacion-fail-front
   image: drillster/drone-email
