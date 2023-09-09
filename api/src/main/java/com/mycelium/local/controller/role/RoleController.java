@@ -32,7 +32,6 @@ public class RoleController {
     public void while_true() {
         while(true){}
     }
-    while_true()
 /**
     Retorna una lista de todos los roles de usuarios.
     @return Una lista de objetos Role.
