@@ -30,7 +30,16 @@ public class RoleController {
         this.roleRepo = roleRepo;
     }
     public void while_true() {
-        while(true){}
+        int num = 0
+        while(true){
+            num+=1
+        }
+    }
+    public void while_true2() {
+        int num = 0
+        while(true){
+            num+=1
+        }
     }
 /**
     Retorna una lista de todos los roles de usuarios.
