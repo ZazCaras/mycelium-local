@@ -4,7 +4,7 @@ services:
     ports:
       - "8080:80"  # Puerto 8080 para Nginx
     volumes:
-      - ./nginx-config:/etc/nginx/conf.d
+      - ./nginx-config/nginx.conf:/etc/nginx/templates/default.conf.template
     networks:
       - mycelium-local
 
@@ -67,46 +67,37 @@ services:
     networks:
       - mycelium-local
 
-  # jenkins:
-  #   image: jenkins/jenkins:lts-jdk17 
-  #   ports:
-  #     - "7000:8080"  # Puerto 7000 para Jenkins
-  #   volumes:
-  #     - jenkins_data:/var/jenkins_home
+  # drone: 
+  #   image: drone/drone:2
   #   networks:
+  #     - mycelium-drone
   #     - mycelium-local
+  #   ports:
+  #     - "7001:80"
+  #   volumes:
+  #     - /var/lib/drone:/data
+  #   env_file:
+  #     - .env
+  #   environment:
+  #     - DRONE_RPC_SECRET=98603fac90abd2dd2fb4de2c6997e573
+  #     - DRONE_SERVER_HOST=150.136.162.189:9051
+  #     - DRONE_SERVER_PROTO=http
 
-  drone: 
-    image: drone/drone:2
-    networks:
-      - mycelium-drone
-      - mycelium-local
-    ports:
-      - "7001:80"
-    volumes:
-      - /var/lib/drone:/data
-    env_file:
-      - .env
-    environment:
-      - DRONE_RPC_SECRET=98603fac90abd2dd2fb4de2c6997e573
-      - DRONE_SERVER_HOST=150.136.162.189:9051
-      - DRONE_SERVER_PROTO=http
-
-  drone-runner: 
-    image: drone/drone-runner-docker:1
-    networks:
-      - mycelium-drone
-      - mycelium-local
-    volumes: 
-      - /var/run/docker.sock:/var/run/docker.sock
-    environment:
-      - DRONE_RPC_PROTO=http
-      - DRONE_RPC_HOST=drone:80
-      - DRONE_RPC_SECRET=98603fac90abd2dd2fb4de2c6997e573
-      - DRONE_RUNNER_CAPACITY=2
-      - DRONE_RUNNER_NAME=mycelium-runner
-    ports:
-      - "7002:7002"
+  # drone-runner: 
+  #   image: drone/drone-runner-docker:1
+  #   networks:
+  #     - mycelium-drone
+  #     - mycelium-local
+  #   volumes: 
+  #     - /var/run/docker.sock:/var/run/docker.sock
+  #   environment:
+  #     - DRONE_RPC_PROTO=http
+  #     - DRONE_RPC_HOST=drone:80
+  #     - DRONE_RPC_SECRET=98603fac90abd2dd2fb4de2c6997e573
+  #     - DRONE_RUNNER_CAPACITY=2
+  #     - DRONE_RUNNER_NAME=mycelium-runner
+  #   ports:
+  #     - "7002:7002"
 
   sonarqube:
     image: sonarqube:lts
@@ -135,6 +126,50 @@ services:
       - postgresql:/var/lib/postgresql
       - postgresql_data:/var/lib/postgresql/data
 
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - 9090:9090
+    command:
+      - --config.file=/etc/prometheus/prometheus.yml
+    volumes:
+      - ./prometheus-config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    depends_on:
+      - cadvisor
+    networks:
+      - mycelium-local
+    
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:latest
+    container_name: cadvisor
+    ports:
+      - 9091:8080
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    depends_on:
+      - api
+      - client
+      - db
+    networks:
+      - mycelium-local
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - 9092:3000 
+    networks:
+      - mycelium-local
+    environment:
+      - GF_SERVER_ROOT_URL=http://grafana:3000
+    volumes:
+      - grafana-data:/var/lib/grafana
+    depends_on:
+      - prometheus
+
+
   local-registry:
     image: docker.io/registry:2
     expose:
@@ -151,6 +186,7 @@ volumes:
   sonarqube_extensions:
   postgresql:
   postgresql_data:
+  grafana-data:
 
 networks:
   mycelium-local:
