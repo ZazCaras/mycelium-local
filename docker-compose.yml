@@ -101,7 +101,7 @@ services:
 
   sonarqube:
     image: sonarqube:lts
-    ports:
+    ports: 
       - "9000:9000"
     networks:
       - mycelium-sonarqube
