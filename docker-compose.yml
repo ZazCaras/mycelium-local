@@ -116,7 +116,7 @@ services:
       - sonarqube_extensions:/opt/sonarqube/extensions
 
   sonarqube-db:
-    image: postgres
+    image: postgres 
     networks:
       - mycelium-sonarqube
     environment:
