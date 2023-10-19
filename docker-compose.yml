@@ -23,6 +23,8 @@ services:
     environment:
       - VIRTUAL_PATH=~^/(api|swagger|swagger-ui)
       - VIRTUAL_PORT=8080
+      - DATABASE_JDBC_URL=jdbc:oracle:thin:@db:1521/XEPDB1
+      - DATABASE_NAME=PDBADMIN
     depends_on:
       - db
 
@@ -169,6 +171,18 @@ services:
     depends_on:
       - prometheus
 
+  datadoghq:
+    pid: host
+    container_name: dd-agent
+    volumes:
+        - '/var/run/docker.sock:/var/run/docker.sock:ro'
+        - '/proc/:/host/proc/:ro'
+        - '/sys/fs/cgroup/:/host/sys/fs/cgroup:ro'
+    env_file:
+      - .env
+    image: 'gcr.io/datadoghq/agent:7'
+    labels:
+      com.datadoghq.ad.logs: '[{"source": "datadog-agent", "service": "datadog-agent"}]'
 
   local-registry:
     image: docker.io/registry:2
