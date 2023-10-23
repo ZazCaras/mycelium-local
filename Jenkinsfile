@@ -149,7 +149,7 @@ pipeline {
               //configName: uatpc,
               transfers: [
                 sshTransfer (
-                  execCommand: 'docker compose -f docker-compose.app.yml pull && docker compose -f docker-compose.app.yml up -d',
+                  execCommand: 'cd /home/diego/Documents/Proyecto2023/fork1/mycelium-local; docker compose -f docker-compose.app.yml pull && docker compose -f docker-compose.app.yml up -d',
                   execTimeout: 3600000
                 )
               ]
