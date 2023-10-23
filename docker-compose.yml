@@ -1,60 +1,59 @@
 services:
-  nginx:
-    image: nginx:latest
-    ports:
-      - "8080:80"  # Puerto 8080 para Nginx
-    volumes:
-      - ./nginx-config/nginx.conf:/etc/nginx/templates/default.conf.template
-    networks:
-      - mycelium-local
+  # nginx:
+  #   image: nginx:latest
+  #   ports:
+  #     - "8080:80"  # Puerto 8080 para Nginx
+  #   volumes:
+  #     - ./nginx-config/nginx.conf:/etc/nginx/templates/default.conf.template
+  #   networks:
+  #     - mycelium-local
 
-  api:
-    image: localhost/mycelium-local_api:dev
-    ports:
-      - "8081:8080"  # Puerto 8081 para el servicio API
-    volumes:
-      - ./api:/app:rw
-      - gradle:/var/lib/gradle:rw
-    build:
-      context: api
-      dockerfile: Dockerfile.dev
-    networks:
-      - mycelium-local
-    environment:
-      - VIRTUAL_PATH=~^/(api|swagger|swagger-ui)
-      - VIRTUAL_PORT=8080
-      - DATABASE_JDBC_URL=jdbc:oracle:thin:@db:1521/XEPDB1
-      - DATABASE_NAME=PDBADMIN
-    depends_on:
-      - db
+  # api:
+  #   image: localhost/mycelium-local_api:dev
+  #   ports:
+  #     - "8081:8080"  # Puerto 8081 para el servicio API
+  #   volumes:
+  #     - ./api:/app:rw
+  #     - gradle:/var/lib/gradle:rw
+  #   build:
+  #     context: api
+  #     dockerfile: Dockerfile.dev
+  #   networks:
+  #     - mycelium-local
+  #   environment:
+  #     - VIRTUAL_PATH=~^/(api|swagger|swagger-ui)
+  #     - VIRTUAL_PORT=8080
+  #     - DATABASE_JDBC_URL=jdbc:oracle:thin:@db:1521/XEPDB1
+  #     - DATABASE_NAME=PDBADMIN
+  #   depends_on:
+  #     - db
 
-  client:
-    image: localhost/mycelium-local_client:dev
-    ports:
-      - "3000:3000"  # Puerto 3000 para el cliente
-    volumes:
-      - ./client:/app:rw
-    build:
-      context: client
-      dockerfile: Dockerfile.dev
-    networks:
-      - mycelium-local
-    environment:
-      - VIRTUAL_PATH=/
-      - VIRTUAL_PORT=3000
+  # client:
+  #   image: localhost/mycelium-local_client:dev
+  #   ports:
+  #     - "3000:3000"  # Puerto 3000 para el cliente
+  #   volumes:
+  #     - ./client:/app:rw
+  #   build:
+  #     context: client
+  #     dockerfile: Dockerfile.dev
+  #   networks:
+  #     - mycelium-local
+  #   environment:
+  #     - VIRTUAL_PATH=/
+  #     - VIRTUAL_PORT=3000
 
-  db:
-    image: container-registry.oracle.com/database/express:21.3.0-xe
-    ports:
-      - "1521:1521"  # Puerto 1521 para la base de datos
-    restart: unless-stopped
-    environment:
-      ORACLE_PWD: "12345"
-    volumes:
-      - oracledb:/opt/oracle/oradata
-    networks:
-      - mycelium-local
-
+  # db:
+  #   image: container-registry.oracle.com/database/express:21.3.0-xe
+  #   ports:
+  #     - "1521:1521"  # Puerto 1521 para la base de datos
+  #   restart: unless-stopped
+  #   environment:
+  #     ORACLE_PWD: "12345"
+  #   volumes:
+  #     - oracledb:/opt/oracle/oradata
+  #   networks:
+  #     - mycelium-local
 
   jenkins:
     image: 127.0.0.1:5000/jenkins/jenkins:lts-jdk17
@@ -128,66 +127,68 @@ services:
       - postgresql:/var/lib/postgresql
       - postgresql_data:/var/lib/postgresql/data
 
-  prometheus:
-    image: prom/prometheus:latest
-    ports:
-      - 9090:9090
-    command:
-      - --config.file=/etc/prometheus/prometheus.yml
-    volumes:
-      - ./prometheus-config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
-    depends_on:
-      - cadvisor
-    networks:
-      - mycelium-local
+  # prometheus:
+  #   image: prom/prometheus:latest
+  #   ports:
+  #     - 9090:9090
+  #   command:
+  #     - --config.file=/etc/prometheus/prometheus.yml
+  #   volumes:
+  #     - ./prometheus-config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+  #   depends_on:
+  #     - cadvisor
+  #   networks:
+  #     - mycelium-local
     
-  cadvisor:
-    image: gcr.io/cadvisor/cadvisor:latest
-    container_name: cadvisor
-    ports:
-      - 9091:8080
-    volumes:
-      - /:/rootfs:ro
-      - /var/run:/var/run:rw
-      - /sys:/sys:ro
-      - /var/lib/docker/:/var/lib/docker:ro
-    depends_on:
-      - api
-      - client
-      - db
-    networks:
-      - mycelium-local
+  # cadvisor:
+  #   image: gcr.io/cadvisor/cadvisor:latest
+  #   container_name: cadvisor
+  #   ports:
+  #     - 9091:8080
+  #   volumes:
+  #     - /:/rootfs:ro
+  #     - /var/run:/var/run:rw
+  #     - /sys:/sys:ro
+  #     - /var/lib/docker/:/var/lib/docker:ro
+  #   depends_on:
+  #     - api
+  #     - client
+  #     - db
+  #   networks:
+  #     - mycelium-local
 
-  grafana:
-    image: grafana/grafana:latest
-    ports:
-      - 9092:3000 
-    networks:
-      - mycelium-local
-    environment:
-      - GF_SERVER_ROOT_URL=http://grafana:3000
-    volumes:
-      - grafana-data:/var/lib/grafana
-    depends_on:
-      - prometheus
+  # grafana:
+  #   image: grafana/grafana:latest
+  #   ports:
+  #     - 9092:3000 
+  #   networks:
+  #     - mycelium-local
+  #   environment:
+  #     - GF_SERVER_ROOT_URL=http://grafana:3000
+  #   volumes:
+  #     - grafana-data:/var/lib/grafana
+  #   depends_on:
+  #     - prometheus
 
-  datadoghq:
-    pid: host
-    container_name: dd-agent
-    volumes:
-        - '/var/run/docker.sock:/var/run/docker.sock:ro'
-        - '/proc/:/host/proc/:ro'
-        - '/sys/fs/cgroup/:/host/sys/fs/cgroup:ro'
-    env_file:
-      - .env
-    image: 'gcr.io/datadoghq/agent:7'
-    labels:
-      com.datadoghq.ad.logs: '[{"source": "datadog-agent", "service": "datadog-agent"}]'
+  # datadoghq:
+  #   pid: host
+  #   container_name: dd-agent
+  #   volumes:
+  #       - '/var/run/docker.sock:/var/run/docker.sock:ro'
+  #       - '/proc/:/host/proc/:ro'
+  #       - '/sys/fs/cgroup/:/host/sys/fs/cgroup:ro'
+  #   env_file:
+  #     - .env
+  #   image: 'gcr.io/datadoghq/agent:7'
+  #   labels:
+  #     com.datadoghq.ad.logs: '[{"source": "datadog-agent", "service": "datadog-agent"}]'
 
   local-registry:
     image: docker.io/registry:2
     expose:
       - 5000
+    ports:
+      - 5050:5000
     networks:
       - mycelium-local
 

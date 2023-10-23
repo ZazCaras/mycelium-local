@@ -120,44 +120,44 @@ pipeline {
       }
     }
 
-    // stage("Podman push") {
-    //   steps {
-    //     script {
-    //       sh "podman push local-registry:5000/mycelium-local_api:main"
-    //       sh "podman push local-registry:5000/mycelium-local_client:main"
-    //     }
-    //   }
-    //   post {
-    //     failure { 
-    //       mail (
-    //           to: "jflores@unis.edu.gt, dvallejo@unis.edu.gt", 
-    //           subject: "Falla en la etapa de -Podman push-", 
-    //           body: "No se han podido subir los cambios al docker Registry."
-    //       )
-    //     }
-    //   }
-    // } 
+    stage("Podman push") {
+      steps {
+        script {
+          sh "podman push local-registry:5000/mycelium-local_api:main"
+          sh "podman push local-registry:5000/mycelium-local_client:main"
+        }
+      }
+      post {
+        failure { 
+          mail (
+              to: "jflores@unis.edu.gt, dvallejo@unis.edu.gt", 
+              subject: "Falla en la etapa de -Podman push-", 
+              body: "No se han podido subir los cambios al docker Registry."
+          )
+        }
+      }
+    } 
  
-    //   stage("Deploy") {
-    //     steps {
-    //       sshPublisher(
-    //         failOnError: true, 
-    //         publishers: [
-    //           sshPublisherDesc(
-    //             configName: "mainpc",
-    //             //configName: devpc,
-    //             //configName: uatpc,
-    //             transfers: [
-    //               sshTransfer (
-    //                 execCommand: 'docker compose pull && docker compose up -d',
-    //                 execTimeout: 3600000
-    //               )
-    //             ]
-    //           )
-    //         ]
-    //       )
-    //     }
-    //   }
- 
+    stage("Deploy") {
+      steps {
+        sshPublisher(
+          failOnError: true, 
+          publishers: [
+            sshPublisherDesc(
+              configName: "mainpc",
+              //configName: devpc,
+              //configName: uatpc,
+              transfers: [
+                sshTransfer (
+                  execCommand: 'docker compose -f docker-compose.app.yml pull && docker compose -f docker-compose.app.yml  up -d',
+                  execTimeout: 3600000
+                )
+              ]
+            )
+          ]
+        )
+      }
+    }
+
   }
 }

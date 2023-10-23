@@ -1,0 +1,58 @@
+services:
+  nginx:
+    image: nginx:latest
+    ports:
+      - "8080:80"  # Puerto 8080 para Nginx
+    volumes:
+      - ./nginx-config/nginx.conf:/etc/nginx/templates/default.conf.template
+    networks:
+      - mycelium-local
+
+  api:
+    image: localhost:5050/mycelium-local_api:main
+    ports:
+      - "8081:8080"  # Puerto 8081 para el servicio API
+    build:
+      context: api
+      dockerfile: Dockerfile.dev
+    networks:
+      - mycelium-local
+    environment:
+      - VIRTUAL_PATH=~^/(api|swagger|swagger-ui)
+      - VIRTUAL_PORT=8080
+      - DATABASE_JDBC_URL=jdbc:oracle:thin:@db:1521/XEPDB1
+      - DATABASE_NAME=PDBADMIN
+    depends_on:
+      - db
+
+  client:
+    image: localhost:5050/mycelium-local_client:main
+    ports:
+      - "3000:3000"  # Puerto 3000 para el cliente
+    build:
+      context: client
+      dockerfile: Dockerfile.dev
+    networks:
+      - mycelium-local
+    environment:
+      - VIRTUAL_PATH=/
+      - VIRTUAL_PORT=3000
+
+  db:
+    image: container-registry.oracle.com/database/express:21.3.0-xe
+    ports:
+      - "1521:1521"  # Puerto 1521 para la base de datos
+    restart: unless-stopped
+    environment:
+      ORACLE_PWD: "12345"
+    volumes:
+      - oracledb:/opt/oracle/oradata
+    networks:
+      - mycelium-local
+  
+volumes:
+  oracledb: 
+
+networks:
+  mycelium-local:
+    driver: bridge
