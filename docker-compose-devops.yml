@@ -109,6 +109,17 @@ services:
     networks:
       mycelium-local:
 
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - 9090:9090  # Port for Prometheus web UI
+    volumes:
+      - ./prometheus-config:/etc/prometheus
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"
+    networks:
+      - mycelium-local
+
 volumes:
   oracledb:
   sonarqube_conf:
