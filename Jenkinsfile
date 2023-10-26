@@ -135,7 +135,7 @@ pipeline {
               body: "No se han podido subir los cambios al docker Registry."
           )
         }
-      }
+      } 
     }  
  
     stage("Deploy") {
