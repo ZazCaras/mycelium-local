@@ -31,4 +31,3 @@ VOLUME /app
 EXPOSE 8080
 
 ENTRYPOINT [ "/app/dev-entrypoint.sh" ]
-

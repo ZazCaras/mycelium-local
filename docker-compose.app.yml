@@ -7,6 +7,8 @@ services:
       - ./nginx-config/nginx.conf:/etc/nginx/templates/default.conf.template
     networks:
       - mycelium-local
+    depends_on:
+      - client
 
   api:
     image: localhost:5050/mycelium-local_api:main
@@ -14,7 +16,7 @@ services:
       - "8081:8080"  # Puerto 8081 para el servicio API
     build:
       context: api
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile.prod
     networks:
       - mycelium-local
     environment:
@@ -31,7 +33,7 @@ services:
       - "3000:3000"  # Puerto 3000 para el cliente
     build:
       context: client
-      dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile.prod
     networks:
       - mycelium-local
     environment:
