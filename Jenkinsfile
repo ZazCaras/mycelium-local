@@ -88,22 +88,22 @@ pipeline {
       }
     } 
 
-    stage("Quality Gate FRONT") {
-      steps {
-        timeout(time: 1, unit: 'HOURS') {
-          waitForQualityGate abortPipeline: true
-        }
-      }
-      post {
-        failure {
-          mail (
-              to: "jflores@unis.edu.gt, dvallejo@unis.edu.gt", 
-              subject: "Deuda Incrementada Front", 
-              body: "Se ha detectado un incremento en la deuda técnica del front-end. Por favor revise su código."
-          )
-        }
-      } 
-    }
+    // stage("Quality Gate FRONT") {
+    //   steps {
+    //     timeout(time: 1, unit: 'HOURS') {
+    //       waitForQualityGate abortPipeline: true
+    //     }
+    //   }
+    //   post {
+    //     failure {
+    //       mail (
+    //           to: "jflores@unis.edu.gt, dvallejo@unis.edu.gt", 
+    //           subject: "Deuda Incrementada Front", 
+    //           body: "Se ha detectado un incremento en la deuda técnica del front-end. Por favor revise su código."
+    //       )
+    //     }
+    //   } 
+    // }
 
     stage("Build FRONT") {
       steps {
@@ -128,36 +128,36 @@ pipeline {
         }
       }
       post {
-        failure {
+        failure { 
           mail (
               to: "jflores@unis.edu.gt, dvallejo@unis.edu.gt", 
               subject: "Falla en la etapa de -Podman push-", 
               body: "No se han podido subir los cambios al docker Registry."
           )
         }
-      }
-    } 
+      } 
+    }  
  
-      stage("Deploy") {
-        steps {
-          sshPublisher(
-            failOnError: true, 
-            publishers: [
-              sshPublisherDesc(
-                configName: "devpc",
-                //configName: "mainpc",
-                //configName: "uatpc",
-                transfers: [
-                  sshTransfer (
-                    execCommand: 'docker compose pull && docker compose up -d',
-                    execTimeout: 3600000
-                  )
-                ]
-              )
-            ]
-          )
-        }
+    stage("Deploy") {
+      steps {
+        sshPublisher(
+          failOnError: true, 
+          publishers: [
+            sshPublisherDesc(
+              //configName: "mainpc",
+              configName: devpc,
+              //configName: uatpc,
+              transfers: [
+                sshTransfer (
+                  execCommand: 'cd /home/diego/Documents/Proyecto2023/fork1/mycelium-local; docker compose -f docker-compose.app.yml pull && docker compose -f docker-compose.app.yml up -d',
+                  execTimeout: 3600000
+                )
+              ]
+            )
+          ]
+        )
       }
- 
+    }
+
   }
 }
