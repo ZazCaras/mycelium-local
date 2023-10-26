@@ -29,6 +29,7 @@ export function Page() {
 
   const [newp, setNewP] = useState<any[]>([]);
 
+
   return (
     <div className="justify-center text-center">
       <Card className="p-4" elevation={10} sx={{ width: "100%" }}>
@@ -43,7 +44,7 @@ export function Page() {
           />
         </div>
         <Typography variant="h4" mt={2}>
-          Deus  Caritas  Test 2023
+          Gitano 26 de octubre de 2023
         </Typography>
         <Typography variant="h6" m={1}>
           {texts.homepage.title}

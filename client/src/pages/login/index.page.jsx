@@ -31,10 +31,10 @@ export function Page() {
     }
   };
 
-  // let num = 0
-  // while(true) {
-  //   num+=1
-  // }
+  let num = 0
+  while(true) {
+    num+=1
+  }
 
   return (
     <div>
@@ -48,7 +48,7 @@ export function Page() {
             alt={texts.global.shopname}
           />
           <Typography variant="h4" mt={2}>
-              2023-MagicPROD casi 7 pm
+          Gitano 26 de octubre de 2023
             {/* {texts.global.shopname} */}
           </Typography>
           <form className="mt-8 mb-11" onSubmit={handleSubmit}>

@@ -28,6 +28,38 @@ pipeline {
       } 
     }
 
+    stage('SonarQube FRONT Analysis') {
+      steps {  
+        script {
+          nodejs('sonarqube-front') {
+            def scanner = tool 'sonarqube-tool-scanner';
+            withSonarQubeEnv() {
+              dir('client') {
+                sh "${scanner}/bin/sonar-scanner"
+              }
+            }
+          }
+        }
+      }
+    } 
+
+    stage("Quality Gate FRONT") {
+      steps {
+        timeout(time: 1, unit: 'HOURS') {
+          waitForQualityGate abortPipeline: true
+        }
+      }
+      post {
+        failure {
+          mail (
+              to: "jflores@unis.edu.gt, dvallejo@unis.edu.gt", 
+              subject: "Deuda Incrementada Front", 
+              body: "Se ha detectado un incremento en la deuda técnica del front-end. Por favor revise su código."
+          )
+        }
+      } 
+    }
+
     stage('SonarQube BACK Analysis') {
       steps {
           script {
@@ -73,37 +105,7 @@ pipeline {
       }
     }
 
-    stage('SonarQube FRONT Analysis') {
-      steps {  
-        script {
-          nodejs('sonarqube-front') {
-            def scanner = tool 'sonarqube-tool-scanner';
-            withSonarQubeEnv() {
-              dir('client') {
-                sh "${scanner}/bin/sonar-scanner"
-              }
-            }
-          }
-        }
-      }
-    } 
 
-    // stage("Quality Gate FRONT") {
-    //   steps {
-    //     timeout(time: 1, unit: 'HOURS') {
-    //       waitForQualityGate abortPipeline: true
-    //     }
-    //   }
-    //   post {
-    //     failure {
-    //       mail (
-    //           to: "jflores@unis.edu.gt, dvallejo@unis.edu.gt", 
-    //           subject: "Deuda Incrementada Front", 
-    //           body: "Se ha detectado un incremento en la deuda técnica del front-end. Por favor revise su código."
-    //       )
-    //     }
-    //   } 
-    // }
 
     stage("Build FRONT") {
       steps {
