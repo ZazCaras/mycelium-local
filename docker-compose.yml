@@ -55,50 +55,50 @@ services:
   #   networks:
   #     - mycelium-local
 
-  jenkins:
-    image: 127.0.0.1:5000/jenkins/jenkins:lts-jdk17
-    build:
-      context: .
-      dockerfile: DockerfileJenkins
-    privileged: true
-    ports:
-      - 7000:8080
-    volumes:
-      - jenkins_data:/var/jenkins_home
-    networks:
-      - mycelium-local
-
-  # drone: 
-  #   image: drone/drone:2
-  #   networks:
-  #     - mycelium-drone
-  #     - mycelium-local
+  # jenkins:
+  #   image: 127.0.0.1:5000/jenkins/jenkins:lts-jdk17
+  #   build:
+  #     context: .
+  #     dockerfile: DockerfileJenkins
+  #   privileged: true
   #   ports:
-  #     - "7001:80"
+  #     - 7000:8080
   #   volumes:
-  #     - /var/lib/drone:/data
-  #   env_file:
-  #     - .env
-  #   environment:
-  #     - DRONE_RPC_SECRET=98603fac90abd2dd2fb4de2c6997e573
-  #     - DRONE_SERVER_HOST=150.136.162.189:9051
-  #     - DRONE_SERVER_PROTO=http
-
-  # drone-runner: 
-  #   image: drone/drone-runner-docker:1
+  #     - jenkins_data:/var/jenkins_home
   #   networks:
-  #     - mycelium-drone
   #     - mycelium-local
-  #   volumes: 
-  #     - /var/run/docker.sock:/var/run/docker.sock
-  #   environment:
-  #     - DRONE_RPC_PROTO=http
-  #     - DRONE_RPC_HOST=drone:80
-  #     - DRONE_RPC_SECRET=98603fac90abd2dd2fb4de2c6997e573
-  #     - DRONE_RUNNER_CAPACITY=2
-  #     - DRONE_RUNNER_NAME=mycelium-runner
-  #   ports:
-  #     - "7002:7002"
+
+  drone: 
+    image: drone/drone:2
+    networks:
+      # - mycelium-drone
+      - mycelium-local
+    ports:
+      - "7001:80"
+    volumes:
+      - /var/lib/drone:/data
+    env_file:
+      - .env
+    environment:
+      - DRONE_RPC_SECRET=98603fac90abd2dd2fb4de2c6997e573
+      - DRONE_SERVER_HOST=150.136.162.189:9051
+      - DRONE_SERVER_PROTO=http
+
+  drone-runner: 
+    image: drone/drone-runner-docker:1
+    networks:
+      # - mycelium-drone
+      - mycelium-local
+    volumes: 
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - DRONE_RPC_PROTO=http
+      - DRONE_RPC_HOST=drone:80
+      - DRONE_RPC_SECRET=98603fac90abd2dd2fb4de2c6997e573
+      - DRONE_RUNNER_CAPACITY=2
+      - DRONE_RUNNER_NAME=mycelium-runner
+    ports:
+      - "7002:7002"
 
   sonarqube:
     image: sonarqube:lts
@@ -208,5 +208,5 @@ networks:
     driver: bridge
   mycelium-sonarqube:
     driver: bridge
-  mycelium-drone:
-    driver: bridge
+  # mycelium-drone:
+  #   driver: bridge

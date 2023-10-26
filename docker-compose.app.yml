@@ -33,12 +33,14 @@ services:
       - "3000:3000"  # Puerto 3000 para el cliente
     build:
       context: client
-      dockerfile: Dockerfile.prod
+      dockerfile: Dockerfile.dev
     networks:
       - mycelium-local
     environment:
       - VIRTUAL_PATH=/
       - VIRTUAL_PORT=3000
+    volumes:
+      - ./client:/app:rw
 
   db:
     image: container-registry.oracle.com/database/express:21.3.0-xe
