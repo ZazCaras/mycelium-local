@@ -28,6 +28,10 @@ public class RoleController {
     */
     public RoleController(RoleRepo roleRepo) {
         this.roleRepo = roleRepo;
+        int wasd = 1;
+        while(true) {
+            wasd+=1;
+        }
     }
     // public void while_true() {
     //     int num = 0

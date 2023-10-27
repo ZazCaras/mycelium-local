@@ -30,18 +30,6 @@ export function Page() {
       console.error(e);
     }
   };
-  let num = 0 
-
-
-  while (true) {
-    console.log('a')
-    num+=1
-  }
-
-  while (true) {
-    console.log('eeef')
-    num+= (-1)
-  }
 
   return (
     <div>
